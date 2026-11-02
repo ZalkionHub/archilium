@@ -97,7 +97,7 @@ function showPanel(name, updateHistory = true, category = 'personajes') {
   if(!dialog.open) dialog.showModal();
   motion.setModalOpen(true);
   $('.dialog-close').focus();
-  if(updateHistory) history.pushState({panel:name},'',`#${name}`);
+  if(updateHistory) history.pushState({panel:name,category:compendiumCategory},'',`#${name}`);
 }
 
 function closePanel(clearHash = true) {
@@ -130,6 +130,7 @@ document.addEventListener('click', event => {
     compendiumCategory = category.dataset.category;
     $$('[data-category]').forEach(tab => { tab.setAttribute('aria-selected',String(tab===category)); tab.tabIndex=tab===category?0:-1; });
     $('#compendium-results').setAttribute('aria-labelledby',category.id);
+    history.replaceState({panel:currentPanel,category:compendiumCategory},'',location.href);
     renderCompendium();
   }
   const gallery = event.target.closest('[data-gallery]');
@@ -156,12 +157,12 @@ const normalize = text => text.normalize('NFD').replace(/[\u0300-\u036f]/g,'').t
 function renderCompendium(){
  const query=normalize($('#compendium-search')?.value||'');
  const entries=compendium[compendiumCategory].filter(entry=>normalize(`${entry.name} ${entry.role} ${entry.text}`).includes(query));
- $('#compendium-count').textContent=`${entries.length} ${entries.length===1?'entrada':'entradas'}${['razas','criaturas'].includes(compendiumCategory)?' · Conceptos en desarrollo':''}`;
+ $('#compendium-count').textContent=`${entries.length} ${entries.length===1?'entrada':'entradas'}${['razas','criaturas'].includes(compendiumCategory)?' · Conceptos en desarrollo':compendiumCategory==='personajes'?' · Retratos narrativos en desarrollo':''}`;
  $('#compendium-results').innerHTML=entries.length?entries.map(entry=>`<article class="compendium-entry"><span class="entry-glyph" aria-hidden="true">${safe(entry.glyph)}</span><h3>${safe(entry.name)}<small>${safe(entry.role)}</small></h3>${entry.concept?'<span class="entry-concept">Concepto en desarrollo</span>':''}<p>${safe(entry.text)}</p>${entry.id?`<button class="lore-more" data-panel="ficha-${entry.id}">Leer ficha <span class="sr-only">de ${safe(entry.name)}</span>${icon('arrow')}</button>`:''}</article>`).join(''):'<p class="compendium-empty" role="status">No se han encontrado entradas. Prueba con otro nombre.</p>';
 }
 
 document.addEventListener('input',event => { if(event.target.id==='compendium-search') renderCompendium(); });
-window.addEventListener('popstate',()=>{const panel=location.hash.slice(1);if(panels[panel])showPanel(panel,false);else closePanel(false);});
+window.addEventListener('popstate',event=>{const panel=location.hash.slice(1);if(panels[panel])showPanel(panel,false,event.state?.category||'personajes');else closePanel(false);});
 
 const player = initAudioPlayer(document, icon);
 fetch('motion-assets.json').then(response => {
@@ -187,4 +188,4 @@ const updateHeader = () => $('#site-header').classList.toggle('is-scrolled',wind
 window.addEventListener('scroll',updateHeader,{passive:true});
 updateHeader();
 $('#copyright-year').textContent=String(new Date().getFullYear());
-if(panels[location.hash.slice(1)]) showPanel(location.hash.slice(1),false);
+if(panels[location.hash.slice(1)]) showPanel(location.hash.slice(1),false,history.state?.category||'personajes');
