@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080b10">
+  <meta name="description" content="Descubre Archilium: El Reino Sucumbido, un RPG de acción en pixel art. Conoce a Kalys, sus personajes, los cuatro reinos y los conceptos de razas y criaturas.">
+  <meta property="og:title" content="Archilium: El Reino Sucumbido">
+  <meta property="og:description" content="Conoce a Kalys y las figuras de Archilium. Personajes, cuatro reinos y conceptos de razas y criaturas para una aventura en pixel art.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:image" content="https://zalkionhub.github.io/archilium/assets/archilium-hero-grounded.png">
+  <meta property="og:url" content="https://zalkionhub.github.io/archilium/">
+  <link rel="canonical" href="https://zalkionhub.github.io/archilium/">
+  <title>Archilium: El Reino Sucumbido</title>
+  <link rel="icon" href="assets/emblem.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/cinzel.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="assets/barlow-condensed-bold.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="assets/archilium-hero-grounded.png" as="image" fetchpriority="high">
+  <link rel="preload" href="assets/archilium-corona-dorada.png" as="image" fetchpriority="high">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="cinematic.css">
+  <link rel="stylesheet" href="lore.css">
+  <script src="loading-screen.js"></script>
+  <script src="app.js" type="module"></script>
+</head>
+<body>
+  <div class="site-loader" id="site-loader" aria-label="Cargando Archilium" aria-hidden="true">
+    <div class="loader-glow" aria-hidden="true"></div>
+    <div class="loader-content">
+      <img class="loader-logo" src="assets/archilium-corona-dorada.png" alt="Archilium · El reino sucumbido" width="2172" height="724" fetchpriority="high">
+      <span class="loader-rule" aria-hidden="true"></span>
+      <p role="status">Cargando el reino…</p>
+      <button id="loader-skip" type="button">Entrar al reino</button>
+    </div>
+  </div>
+  <a class="skip-link" href="#el-juego">Saltar al contenido</a>
+  <svg class="icon-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24"><path class="solid" d="m8 5 11 7-11 7z"/></symbol>
+    <symbol id="icon-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke-width="4"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+    <symbol id="icon-volume" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5zM16 8c3 2 3 6 0 8m3-11c5 4 5 10 0 14"/></symbol>
+    <symbol id="icon-muted" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5zM16 9l6 6m0-6-6 6"/></symbol>
+    <symbol id="icon-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.1M3 12h.1M3 18h.1"/></symbol>
+    <symbol id="icon-steam" viewBox="0 0 24 24"><path d="m3 15 5 2 5-5m-8 4a3 3 0 1 0 5 2M22 7a5 5 0 1 1-10 0 5 5 0 0 1 10 0Z"/><circle cx="17" cy="7" r="2.5"/></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></symbol>
+  </svg>
+
+  <header class="site-header" id="site-header">
+    <a class="nav-brand" href="#inicio" aria-label="Archilium, inicio"><img src="assets/archilium-corona-dorada.png" alt="" width="2172" height="724"></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="main-navigation" aria-label="Abrir menú"><span></span><span></span></button>
+    <nav class="main-navigation" id="main-navigation" aria-label="Navegación principal">
+      <a href="#el-juego">El juego</a><a href="#arte-de-fans" data-panel="arte-de-fans">Arte de fans</a><a href="#preguntas" data-panel="preguntas">Preguntas</a><a href="#prensa" data-panel="prensa">Prensa</a><a href="#compendio" data-panel="compendio">Compendio</a><a href="#audio" data-panel="audio">Audio</a><a href="#creadores" data-panel="creadores">Creadores</a>
+    </nav>
+    <button class="header-action" data-panel="presentacion">Ver presentación <svg><use href="#icon-play"/></svg></button>
+  </header>
+  <main>
+    <section class="hero" id="inicio" aria-labelledby="game-title">
+      <div class="hero-scene" aria-hidden="true"><img class="hero-art" src="assets/archilium-hero-grounded.png" alt="" width="1672" height="941" fetchpriority="high"><video id="hero-motion" class="hero-motion" muted playsinline loop preload="none" poster="assets/archilium-hero-grounded.png"></video></div>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="hero-genre"><span></span>RPG DE ACCIÓN · EN DESARROLLO</div>
+      <div class="hero-copy">
+        <p class="hero-kicker">Toda leyenda tiene un comienzo</p>
+        <h1 id="game-title"><img class="hero-logo" src="assets/archilium-corona-dorada.png" alt="Archilium: El Reino Sucumbido" width="2172" height="724" fetchpriority="high"></h1>
+        <div class="hero-actions"><button class="primary-button" data-panel="presentacion"><svg><use href="#icon-play"/></svg> Ver presentación</button><a class="hero-cta" href="#el-juego">Descubre el juego <svg><use href="#icon-arrow"/></svg></a></div>
+      </div>
+      <span class="hero-caption">Una ventana al reino · Arte conceptual</span>
+      <button class="motion-toggle" id="motion-toggle" type="button" aria-label="Pausar animación de portada" aria-pressed="false"><svg><use href="#icon-pause"/></svg><span>Animación</span></button>
+      <a class="scroll-cue" href="#el-juego" aria-label="Desplazarse para descubrir Archilium"><span></span></a>
+    </section>
+    <div class="game-ribbon"><span>Una aventura para un jugador</span><span>PC · Steam previsto</span><span>Pixel art · Vista 3/4</span><span>Fecha por anunciar</span></div>
+    <section class="manifesto-section" id="el-juego" aria-labelledby="intro-title">
+      <div class="section-rule" aria-hidden="true"></div>
+      <p class="eyebrow reveal">Bienvenido a Archilium</p>
+      <h2 id="intro-title" class="display-title reveal">Un reino.<br>Una historia.<br><em>Tu próxima aventura.</em></h2>
+      <div class="manifesto-bottom reveal"><p>Kalys es de Kelus. Su historia pertenece a Archilium.<br>Y la magia de este mundo está a punto de dejar huella.</p><p>Un Action RPG de fantasía con combate en tiempo real, exploración y una historia por descubrir. Dibujado en pixel art, vivido desde una mirada de tres cuartos.</p><a class="text-link" href="#compendio" data-panel="compendio">Abre el compendio <svg><use href="#icon-arrow"/></svg></a></div>
+    </section>
+    <section class="realm-section" id="el-reino" aria-labelledby="world-title">
+      <div class="realm-art"><img src="assets/archilium-pixel-concept-grounded.png" alt="Arte conceptual en pixel art de un camino de piedra entre vegetación y montañas de un reino terrestre" width="1672" height="941" loading="lazy"><div class="realm-art-shade"></div><span class="art-caption">Dirección visual · Arte conceptual</span><button class="expand-art" data-panel="galeria" aria-label="Ampliar el arte de Archilium"><svg><use href="#icon-search"/></svg></button></div>
+      <div class="realm-copy reveal"><p class="eyebrow">Un mundo con historia</p><h2 id="world-title">La magia<br>deja huella.</h2><p>Luxis. Vitys. Aethis. Arcanis. Vexis.<br>Cinco escuelas, una parte de los misterios de Archilium.</p><p>Conoce a Kalys, Enya y las figuras del reino. Descubre Akko, la esperanza del Reino, y las primeras páginas de este universo.</p><a class="text-link" href="#compendio" data-panel="compendio">Explora el universo <svg><use href="#icon-arrow"/></svg></a></div>
+    </section>
+    <!-- lore:start -->
+    <nav class="lore-jump" aria-label="Descubre el universo"><span>Adéntrate en Archilium</span><a href="#personajes">Personajes</a><a href="#razas">Razas</a><a href="#criaturas">Criaturas</a><a href="#reinos">Los reinos</a></nav>
+    <section class="characters-section lore-section" id="personajes" aria-labelledby="characters-title">
+      <header class="lore-section-heading reveal"><div><p class="eyebrow">Los rostros de Archilium</p><h2 id="characters-title">Un reino.<br><em>Historias propias.</em></h2></div><div><p>Antes de las grandes preguntas están las personas. Conoce a Kalys, su familia y las figuras que dan voz al reino.</p><span class="lore-status">Retratos narrativos en desarrollo</span></div></header>
+      <article class="kalys-feature reveal">
+        <div class="kalys-portrait"><div class="portrait-orbit" aria-hidden="true"></div><img src="assets/kalys-inicial-concepto.png" alt="Concepto original de Kalys joven, con pelo castaño, ropa campesina, capa rojiza y espada de cobre" width="1024" height="1536" loading="lazy"><span class="portrait-caption">Kalys al comienzo · Concepto visual</span></div>
+        <div class="kalys-copy"><p class="eyebrow">El comienzo está en casa</p><h3>Kalys</h3><p class="kalys-subtitle">De Kelus. De casa.<br>Hacia lo desconocido.</p><p>Kalys tiene dieciocho años y es un joven campesino de Kelus. Su aventura comienza en casa, con una camisa cruda, un chaleco de cuero marrón, una capa rojiza y la espada de cobre que le ha regalado su padre, Cortus. Su madre es Maris y Markus es su tío materno. Ese entorno familiar da al protagonista un punto de partida cercano, desde el que descubrir Archilium y afrontar lo que encuentre en el camino.</p><dl class="kalys-facts"><div><dt>Edad</dt><dd>18 años</dd></div><div><dt>Origen</dt><dd>Kelus</dd></div><div><dt>Arma inicial</dt><dd>Espada de cobre</dd></div></dl><button class="lore-more" data-panel="ficha-kalys">Leer ficha <span class="sr-only">de Kalys</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></div>
+      </article>
+      <div class="cast-grid"><article class="cast-card accent-ivory reveal"><span class="cast-monogram" aria-hidden="true">E</span><p class="cast-group">La Corona</p><h3>Enya</h3><p class="cast-role">Princesa</p><p>Dos jóvenes, dos maneras de conocer el mismo reino. Una relación que deja espacio a la confianza y las diferencias.</p><button class="lore-more" data-panel="ficha-enya">Leer ficha <span class="sr-only">de Enya</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="cast-card accent-copper reveal"><span class="cast-monogram" aria-hidden="true">C</span><p class="cast-group">El hogar</p><h3>Cortus</h3><p class="cast-role">Padre de Kalys</p><p>El regalo de una espada de cobre y la cercanía de quien conoce el principio de tu historia.</p><button class="lore-more" data-panel="ficha-cortus">Leer ficha <span class="sr-only">de Cortus</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="cast-card accent-sage reveal"><span class="cast-monogram" aria-hidden="true">M</span><p class="cast-group">El hogar</p><h3>Maris</h3><p class="cast-role">Madre de Kalys</p><p>Conversaciones, cuidados y tiempo compartido. Las primeras preocupaciones de Kalys nacen dentro de casa.</p><button class="lore-more" data-panel="ficha-maris">Leer ficha <span class="sr-only">de Maris</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="cast-card accent-steel reveal"><span class="cast-monogram" aria-hidden="true">M</span><p class="cast-group">Los vínculos</p><h3>Markus</h3><p class="cast-role">Forjador · Helike</p><p>Tío materno de Kalys, antiguo Forjador y miembro de Helike. Familia y experiencia se encuentran en una misma persona.</p><button class="lore-more" data-panel="ficha-markus">Leer ficha <span class="sr-only">de Markus</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="cast-card accent-sage reveal"><span class="cast-monogram" aria-hidden="true">A</span><p class="cast-group">Los vínculos</p><h3>Altus</h3><p class="cast-role">Magister retirado</p><p>El creador de Ivmis. Alguien que invita a observar el mundo antes de darlo por comprendido.</p><button class="lore-more" data-panel="ficha-altus">Leer ficha <span class="sr-only">de Altus</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="cast-card accent-gold reveal"><span class="cast-monogram" aria-hidden="true">Z</span><p class="cast-group">La Corona</p><h3>Zalkion</h3><p class="cast-role">Rey de Archilium</p><p>La dimensión pública de un reino que Kalys conoce primero desde la vida cotidiana de Kelus.</p><button class="lore-more" data-panel="ficha-zalkion">Leer ficha <span class="sr-only">de Zalkion</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="cast-card accent-ivory reveal"><span class="cast-monogram" aria-hidden="true">M</span><p class="cast-group">La Corona</p><h3>Maya</h3><p class="cast-role">Reina</p><p>Una perspectiva propia entre los asuntos del reino y las personas que viven sus consecuencias.</p><button class="lore-more" data-panel="ficha-maya">Leer ficha <span class="sr-only">de Maya</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="cast-card accent-violet reveal"><span class="cast-monogram" aria-hidden="true">U</span><p class="cast-group">Las sombras del reino</p><h3>Umys</h3><p class="cast-role">Hyrion</p><p>Hija de Kelmor y dirigente de Hyrion. Un nombre ligado a las preguntas más inquietantes del reino.</p><button class="lore-more" data-panel="ficha-umys">Leer ficha <span class="sr-only">de Umys</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article></div>
+      <div class="archive-links reveal"><span>Otras huellas del reino</span><button data-panel="ficha-arkos-kelmor">Arkos / Kelmor <svg aria-hidden="true"><use href="#icon-arrow"/></svg></button><button data-panel="ficha-joonur">Joonur <svg aria-hidden="true"><use href="#icon-arrow"/></svg></button><button data-panel="ficha-vester">Vester <svg aria-hidden="true"><use href="#icon-arrow"/></svg></button><button data-panel="compendio">Todo el compendio <svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></div>
+    </section>
+    <section class="races-section lore-section" id="razas" aria-labelledby="races-title">
+      <header class="lore-section-heading reveal"><div><p class="eyebrow">Pueblos de un mundo en construcción</p><h2 id="races-title">Muchas formas<br><em>de pertenecer.</em></h2></div><div><p>Cuatro propuestas de razas para imaginar la diversidad de Archilium. Nombres, rasgos y culturas son conceptos en desarrollo, sujetos a revisión.</p><p class="lore-note">La aventura se vive con Kalys como protagonista fijo. Estas fichas exploran a los pueblos del mundo.</p></div></header>
+      <div class="race-grid"><article class="race-card accent-copper reveal"><div class="race-symbol" aria-hidden="true"><span>H</span><i></i></div><span class="lore-status">En desarrollo</span><h3>Humanos</h3><p class="race-role">La diversidad de lo cotidiano</p><p>Comunidades diversas, oficios compartidos y muchas formas de construir un hogar.</p><button class="lore-more" data-panel="ficha-humanos">Leer ficha <span class="sr-only">de Humanos</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="race-card accent-sage reveal"><div class="race-symbol" aria-hidden="true"><span>S</span><i></i></div><span class="lore-status">En desarrollo</span><h3>Silvanos</h3><p class="race-role">Leer la memoria del bosque</p><p>Una propuesta de pueblos atentos a las estaciones, las rutas y las señales de su entorno.</p><button class="lore-more" data-panel="ficha-silvanos">Leer ficha <span class="sr-only">de Silvanos</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="race-card accent-steel reveal"><div class="race-symbol" aria-hidden="true"><span>O</span><i></i></div><span class="lore-status">En desarrollo</span><h3>Ordanos</h3><p class="race-role">Dar forma a lo que permanece</p><p>Arquitectura, piedra y transmisión del oficio como punto de partida de un nuevo pueblo.</p><button class="lore-more" data-panel="ficha-ordanos">Leer ficha <span class="sr-only">de Ordanos</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="race-card accent-tide reveal"><div class="race-symbol" aria-hidden="true"><span>V</span><i></i></div><span class="lore-status">En desarrollo</span><h3>Velarios</h3><p class="race-role">Vivir entre orillas</p><p>Una dirección ligada al agua, los desplazamientos y el encuentro entre comunidades.</p><button class="lore-more" data-panel="ficha-velarios">Leer ficha <span class="sr-only">de Velarios</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article></div>
+      <p class="race-footnote reveal">Cada raza puede reunir culturas, oficios y formas de vida diferentes. Los reinos, las escuelas de magia y las organizaciones tienen su propia historia.</p>
+    </section>
+    <section class="creatures-section lore-section" id="criaturas" aria-labelledby="creatures-title">
+      <header class="lore-section-heading reveal"><div><p class="eyebrow">Primeros conceptos del bestiario</p><h2 id="creatures-title">El mundo<br><em>también responde.</em></h2></div><div><p>Roca, bosque, llanura y magia. Cinco familias de criaturas previstas para dar distintas formas a los encuentros de la aventura.</p><span class="lore-status">Diseños de criaturas en desarrollo</span></div></header>
+      <div class="creature-grid"><article class="creature-card accent-steel reveal"><span class="creature-glyph" aria-hidden="true">K</span><h3>Klomur</h3><p>Criaturas de roca: Rodante, Chamán de roca y Coloso figuran entre sus variantes de diseño.</p><button class="lore-more" data-panel="ficha-klomur">Leer ficha <span class="sr-only">de Klomur</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="creature-card accent-sage reveal"><span class="creature-glyph" aria-hidden="true">M</span><h3>Malekis</h3><p>Criaturas del bosque cuyo diseño explora la relación entre vegetación, movimiento y visibilidad.</p><button class="lore-more" data-panel="ficha-malekis">Leer ficha <span class="sr-only">de Malekis</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="creature-card accent-copper reveal"><span class="creature-glyph" aria-hidden="true">A</span><h3>Ackus</h3><p>Una familia común del bestiario, pensada para encuentros claros y fáciles de leer.</p><button class="lore-more" data-panel="ficha-ackus">Leer ficha <span class="sr-only">de Ackus</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="creature-card accent-gold reveal"><span class="creature-glyph" aria-hidden="true">A</span><h3>Argons</h3><p>Criaturas asociadas a las llanuras, con espacio para explorar distancia y posicionamiento.</p><button class="lore-more" data-panel="ficha-argons">Leer ficha <span class="sr-only">de Argons</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article><article class="creature-card accent-violet reveal"><span class="creature-glyph" aria-hidden="true">W</span><h3>Welmor</h3><p>Reptiles mágicos previstos entre las familias de criaturas de Archilium.</p><button class="lore-more" data-panel="ficha-welmor">Leer ficha <span class="sr-only">de Welmor</span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></article></div>
+    </section>
+    <section class="kingdoms-section lore-section" id="reinos" aria-labelledby="kingdoms-title">
+      <header class="lore-section-heading reveal"><div><p class="eyebrow">El horizonte de la aventura</p><h2 id="kingdoms-title">Cuatro reinos.<br><em>Un mundo por conocer.</em></h2></div><div><p>Archilium y Fey. Otenum y Uma. Nortemun y Vex. Faelium y Kyr. Cuatro correspondencias que abren las páginas del universo.</p><button class="text-link" data-panel="compendio" data-open-category="reino">Explora el mundo <svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></div></header>
+      <div class="kingdom-grid"><article class="kingdom-card reveal"><span aria-hidden="true">A</span><h3>Archilium</h3><p>Fey</p></article><article class="kingdom-card reveal"><span aria-hidden="true">O</span><h3>Otenum</h3><p>Uma</p></article><article class="kingdom-card reveal"><span aria-hidden="true">N</span><h3>Nortemun</h3><p>Vex</p></article><article class="kingdom-card reveal"><span aria-hidden="true">F</span><h3>Faelium</h3><p>Kyr</p></article></div>
+      <div class="schools-strip reveal"><p class="eyebrow">Las cinco escuelas de magia</p><p>Luxis <i>·</i> Vitys <i>·</i> Aethis <i>·</i> Arcanis <i>·</i> Vexis</p><button class="lore-more" data-panel="compendio" data-open-category="magia">Abrir las páginas de la magia <svg aria-hidden="true"><use href="#icon-arrow"/></svg></button></div>
+    </section>
+    <!-- lore:end -->
+    <section class="prototype-section" aria-labelledby="prototype-title">
+      <div class="prototype-copy reveal"><p class="eyebrow">Desde el corazón de Kelus</p><h2 id="prototype-title">Cada aventura<br>empieza con<br><em>un primer paso.</em></h2><p>Movimiento libre. Ataques, esquivas y encuentros en tiempo real. El combate y las zonas del juego están tomando forma.</p><p class="quiet-copy">Una mirada al prototipo actual. El arte, la interfaz y la composición son provisionales.</p><button class="text-link" data-panel="prototipo">Ver el prototipo <svg><use href="#icon-arrow"/></svg></button></div>
+      <figure class="prototype-image reveal"><img src="assets/archilium-kelus-prototipo.png" alt="Captura real del prototipo de Kelus con Kalys y la interfaz de combate provisional" width="1280" height="720" loading="lazy"><figcaption><span class="status-dot"></span> Prototipo de desarrollo · Captura del juego</figcaption></figure>
+    </section>
+    <section class="media-section" id="multimedia" aria-labelledby="media-title">
+      <div class="media-heading reveal"><div><p class="eyebrow">Más cerca del reino</p><h2 id="media-title">Archilium,<br><em>en imágenes.</em></h2></div><p>Arte, movimiento y los primeros fragmentos de un mundo que empieza a cobrar vida.</p></div>
+      <div class="media-grid">
+        <button class="media-tile media-wide reveal" data-panel="presentacion"><img src="assets/archilium-hero-grounded.png" alt="" loading="lazy"><span class="media-play"><svg><use href="#icon-play"/></svg></span><span class="media-tile-copy"><small>Presentación visual</small><strong>Una ventana a Archilium</strong><span>Arte conceptual animado · 10 s</span></span></button>
+        <button class="media-tile media-brand reveal" data-panel="animaciones"><img src="assets/archilium-corona-dorada.png" alt="" loading="lazy"><span class="media-tile-copy"><small>Identidad en movimiento</small><strong>La corona del reino</strong><span>Animación de la marca</span></span></button>
+        <button class="media-tile media-art reveal" data-panel="galeria"><img src="assets/archilium-pixel-concept-grounded.png" alt="" loading="lazy"><span class="media-tile-copy"><small>Galería</small><strong>Imagina el reino</strong><span>Arte conceptual y dirección visual</span></span></button>
+      </div>
+    </section>
+    <section class="journey-section" aria-labelledby="journey-title"><img class="journey-crown" src="assets/emblem.svg" alt="" width="90" height="110" loading="lazy"><p class="eyebrow reveal">La aventura está tomando forma</p><h2 id="journey-title" class="reveal">La historia<br><em>solo acaba de empezar.</em></h2><p class="reveal">Archilium: El Reino Sucumbido está en desarrollo para PC.<br>Conoce el proyecto, descubre su universo y acompaña sus primeros pasos.</p><div class="journey-actions reveal"><button class="primary-button" data-panel="preguntas">Conoce el proyecto <svg><use href="#icon-arrow"/></svg></button><button class="secondary-button" data-panel="creadores">Recursos para creadores</button></div><div class="journey-meta"><span>PC · Steam previsto</span><span>Single player</span><span>Fecha por anunciar</span></div></section>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="#inicio" aria-label="Archilium, inicio"><img src="assets/archilium-corona-dorada.png" alt="" width="2172" height="724" loading="lazy"></a><nav aria-label="Enlaces del pie de página"><a href="#preguntas" data-panel="preguntas">Preguntas frecuentes</a><a href="#prensa" data-panel="prensa">Prensa</a><a href="#creadores" data-panel="creadores">Creadores</a><button data-panel="creditos">Créditos</button></nav><p>© <span id="copyright-year">2026</span> Archilium: El Reino Sucumbido.</p></footer>
+  <aside class="sound-dock" aria-label="Reproductor de ambiente musical">
+    <button id="play-toggle" class="play-toggle" aria-label="Reproducir Regal Welcome" aria-pressed="false"><svg><use href="#icon-play"/></svg></button>
+    <div class="track-info"><span class="track-name">Regal Welcome</span><div class="track-meta"><span id="track-state">Cargando música…</span><span id="track-time">0:00 / --:--</span></div><input id="track-progress" type="range" min="0" max="1" step="0.1" value="0" aria-label="Posición de la pista" disabled></div>
+    <button class="dock-icon playlist-button" data-panel="audio" aria-label="Información de la música"><svg><use href="#icon-list"/></svg></button>
+    <div class="dock-space"></div>
+    <span class="development-label"><span></span>En desarrollo</span>
+    <button class="platform-button" data-panel="plataformas" aria-label="Disponibilidad en PC y Steam"><svg><use href="#icon-steam"/></svg><span>PC / Steam</span></button>
+    <button class="dock-icon volume-button" id="volume-toggle" aria-label="Silenciar música" aria-pressed="false"><svg><use href="#icon-volume"/></svg></button>
+    <label class="volume-control"><span class="volume-caption">Volumen</span><input id="music-volume" type="range" min="0" max="1" step="0.01" value="0.35" aria-label="Volumen de la música"><output id="volume-value" for="music-volume">35%</output></label>
+  </aside>
+  <audio id="ambient-audio" src="assets/regal-welcome.mp3" preload="auto" playsinline loop></audio>
+  <p class="sr-only" id="audio-status" aria-live="polite"></p>
+
+  <dialog id="content-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-topline"><a class="dialog-brand" href="#inicio" aria-label="Archilium, inicio" data-close-dialog><img src="assets/archilium-corona-dorada.png" alt="" width="2172" height="724"></a><button class="dialog-close" aria-label="Cerrar ventana"><svg><use href="#icon-close"/></svg></button></div>
+    <div class="dialog-scroll"><div id="dialog-body"></div></div>
+  </dialog>
+  <noscript><p class="noscript-message">Activa JavaScript para abrir el compendio y los recursos. Puedes descubrir el juego y su dirección visual en esta página.</p></noscript>
+</body>
+</html>

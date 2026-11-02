@@ -1,0 +1,30 @@
+ARCHILIUM: EL REINO SUCUMBIDO
+
+RPG de acción 2D en pixel art con vista de tres cuartos y combate en tiempo real.
+
+Sinopsis de presentación
+Kalys, un joven campesino de Kelus, comienza su aventura en casa con la espada de cobre de su padre, Cortus. Conoce a su familia, las figuras de la Corona y las primeras páginas del universo de Archilium.
+
+Website: https://zalkionhub.github.io/archilium/
+Personajes: Kalys, Enya, Cortus, Maris, Markus, Altus, Zalkion, Maya y Umys. El archivo del compendio incluye Arkos/Kelmor, Joonur y Vester.
+Razas: cuatro conceptos en desarrollo, Humanos, Silvanos, Ordanos y Velarios. Sus nombres, rasgos y culturas son propuestas sujetas a revisión.
+Bestiario: conceptos de Klomur, Malekis, Ackus, Argons y Welmor.
+
+Plataforma prevista: PC / Steam.
+Estado: en desarrollo.
+Fecha de lanzamiento: por anunciar.
+Primera etapa: single player.
+Segunda etapa prevista: cooperativo online con Steamworks.
+
+Materiales
+archilium-hero-grounded.png y archilium-pixel-concept-grounded.png son ilustraciones conceptuales creadas para presentar la atmósfera y la dirección visual del proyecto. No son capturas de gameplay ni diseños finales de personajes.
+
+archilium-kelus-prototipo.png es una captura real del prototipo de Kelus. Sus gráficos, interfaz y composición son provisionales.
+
+kalys-inicial-concepto.png es una ilustración conceptual original del Kalys campesino con su espada de cobre. No es un fotograma del juego ni una hoja de animación.
+
+archilium-ciudadela-jitter.mp4 y archilium-corona-jitter.gif son animaciones de presentación creadas en Jitter con la ilustración y el logotipo originales. No son un tráiler ni vídeo de gameplay.
+
+Al compartir los recursos, acredita el nombre del juego y distingue arte conceptual, animación de marca y captura de prototipo.
+
+No se ha anunciado una demo, un tráiler oficial ni una página de Steam.
