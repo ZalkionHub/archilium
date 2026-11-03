@@ -24,7 +24,7 @@
 .atlas-preview-summary{font-size:13px;line-height:1.9;color:#b4bdb7;margin:0;max-width:570px}
 .atlas-enter{display:flex;align-items:center;justify-content:center;gap:22px;padding:14px 22px;min-height:48px;border:1px solid color-mix(in srgb,var(--region-color) 55%,transparent);background:transparent;color:var(--region-color);font:700 15px var(--condensed);letter-spacing:.08em;text-transform:uppercase;transition:background .2s}
 .atlas-enter:hover{background:#c5a16919}.atlas-enter svg{width:20px;height:20px}
-.atlas-destinations{max-width:1672px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin:20px auto 0;gap:10px}
+.atlas-destinations{max-width:1672px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:20px auto 0;gap:10px}
 .atlas-destinations button{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 15px;background:#11191f;color:#d8d7c8;border:1px solid #96805c40;font:700 14px/1.4 var(--condensed);text-align:left;transition:border-color .2s,background .2s}
 .atlas-destinations button>span,.region-switcher button>span{height:5px;width:5px;flex-shrink:0;transform:rotate(45deg);background:var(--region-color)}
 .atlas-destinations button svg{width:16px;height:16px;margin-left:auto;color:var(--region-color)}
@@ -142,6 +142,16 @@
 .region-experience[data-region=velan] .region-resident-roles>span{color:#dceaff;border-color:#9bbce077;background:#1d304766}
 .region-experience[data-region=lunia] .region-inhabitants-art:before{background:radial-gradient(ellipse at 50% 85%,#a071d940,transparent 70%)}
 .region-experience[data-region=lunia] .region-resident-roles>span{color:#e6d6ff;border-color:#bfa2e577;background:#30224366}
+.region-experience[data-region=furgan] .region-inhabitants-art:before{background:radial-gradient(ellipse at 50% 85%,#a0b95540,transparent 70%)}
+.region-experience[data-region=furgan] .region-resident-roles>span{color:#dceac1;border-color:#b1cf8777;background:#293d2266}
+.region-leader{padding:16px 18px;border:1px solid #b1cf8755;background:#172116a6;margin:18px 0}
+.region-leader h3{margin:8px 0 0;font:500 27px var(--serif);color:#f0e4cb}
+.region-places-previous{margin-top:25px;border-top:1px solid #c9b18233;padding-top:18px}
+.region-places-previous>h3{font:700 12px var(--condensed);letter-spacing:.06em;text-transform:uppercase;color:var(--region-color);margin:0 0 7px}
+.region-places-previous>p{font-size:11px;line-height:1.7;color:#abb4ab;margin:0 0 16px}
+.region-switcher{flex-wrap:wrap;column-gap:clamp(12px,2.2vw,28px)}
+.atlas-destinations button:last-child{grid-column:auto}
+@media(min-width:701px){.region-experience[data-region=furgan] .region-shade{background:linear-gradient(90deg,#080d1355 0,#080d1326 30%,#080d13b3 65%,#080d13d9 100%),linear-gradient(0deg,#080d13ed 0,transparent 28%,transparent 80%,#080d1380)}}
 @media(min-width:701px){
   .region-experience[data-region=lunia] .region-shade{background:linear-gradient(90deg,#080d134d 0,#080d131a 30%,#080d138c 60%,#080d13b3 100%),linear-gradient(0deg,#080d13ed 0,transparent 27%,transparent 78%,#080d1366)}
   .region-experience[data-region=lunia] .region-story{text-shadow:0 1px 3px #04080d,0 1px 9px #04080d}

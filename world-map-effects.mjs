@@ -14,7 +14,8 @@ export class RegionEffects {
       const ratio = Math.min(win.devicePixelRatio || 1, 1.5);
       canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
       this.context?.setTransform(ratio, 0, 0, ratio, 0, 0);
-      this.particles = Array.from({ length: Math.min(180, Math.max(35, Math.round(width * height / 9000))) }, () => this.createParticle(true));
+      const budget = this.theme === 'fireflies' ? Math.min(70, Math.max(20, Math.round(width * height / 18000))) : Math.min(180, Math.max(35, Math.round(width * height / 9000)));
+      this.particles = Array.from({ length: budget }, () => this.createParticle(true));
     };
     this.observer = new win.ResizeObserver(this.resize);
     this.observer.observe(canvas);
@@ -22,6 +23,7 @@ export class RegionEffects {
   }
 
   createParticle(randomY = false) {
+    if (this.theme === 'fireflies') return { x: Math.random() * this.width, y: randomY ? Math.random() * this.height : this.height + 10, size: Math.random() * 1.4 + 0.6, speed: Math.random() * 8 + 3, drift: Math.random() * 10 - 5, phase: Math.random() * Math.PI * 2, opacity: Math.random() * 0.45 + 0.2, ember: false };
     const ember = this.theme === 'embers' && Math.random() > 0.43;
     return { x: Math.random() * this.width, y: randomY ? Math.random() * this.height : ember ? this.height + 15 : -15, size: Math.random() * (ember ? 2.4 : 2.1) + 0.5, speed: 12 + Math.random() * (ember ? 72 : 32), drift: Math.random() * 28 - 14, phase: Math.random() * Math.PI * 2, opacity: Math.random() * 0.55 + 0.2, ember };
   }
@@ -34,12 +36,13 @@ export class RegionEffects {
     ctx.clearRect(0, 0, this.width, this.height);
     for (let i = 0; i < this.particles.length; i++) {
       const p = this.particles[i];
-      p.y += (p.ember || this.theme === 'arcane' ? -1 : 1) * p.speed * delta;
+      const luminous = this.theme === 'arcane' || this.theme === 'fireflies';
+      p.y += (p.ember || luminous ? -1 : 1) * p.speed * delta;
       p.x += (p.drift + Math.sin(time / 1700 + p.phase) * 13) * delta;
-      if (p.y < -25 || p.y > this.height + 25 || p.x < -25 || p.x > this.width + 25) { this.particles[i] = this.createParticle(); if (this.theme === 'arcane') this.particles[i].y = this.height + 10; continue; }
-      ctx.globalAlpha = p.opacity * (this.theme === 'arcane' ? 0.65 + Math.sin(time / 1300 + p.phase) * 0.35 : 1);
-      ctx.fillStyle = p.ember ? '#ffb262' : this.theme === 'snow' ? '#e9f2ff' : this.theme === 'arcane' ? '#d9bcff' : this.theme === 'embers' ? '#b6aaa1' : '#e9d79c';
-      ctx.shadowBlur = p.ember || this.theme === 'arcane' ? 9 : 0;
+      if (p.y < -25 || p.y > this.height + 25 || p.x < -25 || p.x > this.width + 25) { this.particles[i] = this.createParticle(); if (luminous) this.particles[i].y = this.height + 10; continue; }
+      ctx.globalAlpha = p.opacity * (luminous ? 0.65 + Math.sin(time / 1300 + p.phase) * 0.35 : 1);
+      ctx.fillStyle = p.ember ? '#ffb262' : this.theme === 'fireflies' ? '#d5ed9b' : this.theme === 'snow' ? '#e9f2ff' : this.theme === 'arcane' ? '#d9bcff' : this.theme === 'embers' ? '#b6aaa1' : '#e9d79c';
+      ctx.shadowBlur = p.ember || luminous ? 9 : 0;
       ctx.shadowColor = ctx.fillStyle;
       ctx.beginPath();
       ctx.ellipse(p.x, p.y, p.size, this.theme === 'leaves' ? p.size * 0.38 : p.ember ? p.size * 1.8 : p.size, Math.sin(time / 3000 + p.phase), 0, Math.PI * 2);

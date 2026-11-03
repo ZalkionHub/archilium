@@ -1,7 +1,7 @@
-import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261103-lunia-slideshow';
-import { RegionEffects } from './world-map-effects.mjs';
+import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261103-furgan';
+import { RegionEffects } from './world-map-effects.mjs?v=20261103-furgan';
 import { watchRegionArtwork } from './region-artwork.mjs?v=20261103-bocus-scene';
-import { RegionSlideshow } from './region-slideshow.mjs?v=20261103-lunia-slideshow';
+import { RegionSlideshow } from './region-slideshow.mjs?v=20261103-furgan';
 
 const icon = name => `<svg aria-hidden="true"><use href="#icon-${name}"/></svg>`;
 const safe = text => String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -10,9 +10,9 @@ const compass = '<svg class="atlas-compass" viewBox="0 0 80 80" aria-hidden="tru
 export function renderAtlas() {
   const first = regions[0];
   return `<section class="atlas-section" id="mapa" aria-labelledby="atlas-title">
-    <header class="atlas-heading"><div><p class="eyebrow">El atlas de Archilium</p><h2 id="atlas-title">Cinco regiones.<br><em>Un mismo reino.</em></h2></div><div class="atlas-intro"><p>De las forjas de Bocus a los jardines de Lunia.<br>Cada horizonte tiene algo que contar.</p><p class="atlas-instruction">Señala una región para descubrirla. Pulsa para adentrarte.</p></div>${compass}</header>
+    <header class="atlas-heading"><div><p class="eyebrow">El atlas de Archilium</p><h2 id="atlas-title">Regiones y territorios.<br><em>Un mismo reino.</em></h2></div><div class="atlas-intro"><p>De las forjas de Bocus al pantano de Furgan.<br>Cada horizonte tiene algo que contar.</p><p class="atlas-instruction">Señala una región para descubrirla. Pulsa para adentrarte.</p></div>${compass}</header>
     <div class="atlas-frame">
-      <div class="atlas-stage"><img class="atlas-map" src="${mapArtwork}" alt="Mapa ilustrado del Reino de Archilium: Bocus al oeste, Velan al norte, Umen en el centro, Argor al sur y Lunia al este" width="1672" height="941" loading="lazy">
+      <div class="atlas-stage"><img class="atlas-map" src="${mapArtwork}" alt="Mapa ilustrado del Reino de Archilium: Bocus al oeste, Velan al norte, Umen en el centro, Argor al sur, Lunia al noreste y Pantano Furgan al sureste" width="1672" height="941" loading="lazy">
         <svg class="atlas-overlays" viewBox="0 0 1672 941" aria-label="Regiones del mapa interactivo">${regions.map(region => `<a href="#region-${region.id}" role="button" tabindex="0" class="atlas-region" data-region-id="${region.id}" aria-label="Explorar ${safe(region.name)}" style="--region-color:${region.color}"><path d="${region.shape}"/></a>`).join('')}</svg>
         <div class="atlas-hover-card" hidden aria-hidden="true"><span>Descubre la región</span><strong data-hover-name></strong><p data-hover-motto></p><p data-hover-summary></p><small>Pulsa para adentrarte ${icon('arrow')}</small></div>
         <span class="atlas-art-label">Mapa ilustrado · Mundo en desarrollo</span>
@@ -44,8 +44,19 @@ export function renderRegionPanel(region) {
 
 export function renderRegionTab(region, tab) {
   if (tab === 'life') return `<div class="region-life"><span class="region-detail-kicker">El carácter de la región</span><p>${safe(region.life)}</p><p class="region-development">Mundo en desarrollo</p></div>`;
-  if (tab === 'people') return `<div class="region-people">${region.inhabitantsArt ? `<span class="region-detail-kicker">${safe(region.inhabitantsArt.peopleHeading || 'Los rostros de la región')}</span><div class="region-resident-roles">${region.inhabitantsArt.roles.map(role => `<span>${safe(role)}</span>`).join('')}</div>` : ''}${region.inhabitantsArt && region.residents.length ? '<span class="region-detail-kicker">Personajes del compendio</span>' : ''}${region.residents.map(person => `<button class="region-person" data-panel="ficha-${person.id}"><span class="region-person-initial" aria-hidden="true">${person.name[0]}</span><span><strong>${person.name}</strong><small>${safe(person.role)}</small></span>${icon('arrow')}</button>`).join('')}<p>${safe(region.residentsNote)}</p>${region.residents.length ? '' : '<span class="region-development">Historias en desarrollo</span>'}</div>`;
-  return `<ul class="region-places">${region.places.map(place => `<li><span class="region-place-mark" aria-hidden="true">◇</span><div><h3>${safe(place.name)}</h3><span>${safe(place.kind)}</span><p>${safe(place.text)}</p></div></li>`).join('')}</ul>`;
+  if (tab === 'people') {
+    const roles = region.inhabitantsArt ? `<span class="region-detail-kicker">${safe(region.inhabitantsArt.peopleHeading || 'Los rostros de la región')}</span><div class="region-resident-roles">${region.inhabitantsArt.roles.map(role => `<span>${safe(role)}</span>`).join('')}</div>` : '';
+    const leader = region.leader ? `<aside class="region-leader" aria-label="${safe(region.leader.role)}"><span class="region-detail-kicker">${safe(region.leader.role)}</span><h3>${safe(region.leader.name)}</h3></aside>` : '';
+    const cards = region.residents.map(person => `<button class="region-person" data-panel="ficha-${person.id}"><span class="region-person-initial" aria-hidden="true">${person.name[0]}</span><span><strong>${person.name}</strong><small>${safe(person.role)}</small></span>${icon('arrow')}</button>`).join('');
+    return `<div class="region-people">${roles}${leader}${region.inhabitantsArt && region.residents.length ? '<span class="region-detail-kicker">Personajes del compendio</span>' : ''}${cards}<p>${safe(region.residentsNote)}</p>${region.residents.length ? '' : '<span class="region-development">Historias en desarrollo</span>'}</div>`;
+  }
+  const current = region.places.filter(place => place.onMap !== false);
+  const earlier = region.places.filter(place => place.onMap === false);
+  return `${renderPlaces(current)}${earlier.length ? `<div class="region-places-previous"><h3>Otros lugares de la región</h3><p>Conocidos del atlas anterior; no aparecen rotulados en el mapa actual.</p>${renderPlaces(earlier)}</div>` : ''}`;
+}
+
+function renderPlaces(places) {
+  return `<ul class="region-places">${places.map(place => `<li><span class="region-place-mark" aria-hidden="true">◇</span><div><h3>${safe(place.name)}</h3><span>${safe(place.kind)}</span><p>${safe(place.text)}</p></div></li>`).join('')}</ul>`;
 }
 
 export function initWorldMap(doc, { player, onPreview = () => {} } = {}) {
