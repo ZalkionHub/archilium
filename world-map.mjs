@@ -1,4 +1,4 @@
-import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261103-argentia-mercantiles';
+import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261103-lunia';
 import { RegionEffects } from './world-map-effects.mjs';
 import { watchRegionArtwork } from './region-artwork.mjs?v=20261103-bocus-scene';
 

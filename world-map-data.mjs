@@ -83,9 +83,11 @@ export const regions = [
     id: 'lunia', name: 'Valle Lunia', shortName: 'Lunia',
     motto: 'Magia · Sabiduría · Armonía', theme: 'arcane', color: '#c6a2f3',
     heading: 'Sigue el curso\nde lo extraordinario.',
-    summary: 'Cascadas, torres luminosas y jardines. El mapa presenta Lunia bajo un estandarte de magia, sabiduría y armonía.',
+    summary: 'La Academia domina un valle de jardines, puentes y cascadas. Al fondo, un pueblo entre las laderas de Lunia.',
     shape: 'M1230 0 L1672 0 L1672 738 L1550 754 L1410 710 L1320 660 L1275 540 L1270 480 L1210 345 L1120 300 L1180 240 L1210 175 L1230 90 Z',
     camera: { x: 1398, y: 358, scale: 2.5 }, music: null,
+    landscape: { src: 'assets/lunia-academia-paisaje.png', position: '40% center', width: 1672, height: 941 },
+    inhabitantsArt: { src: 'assets/lunia-habitantes-trio.png', width: 1312, height: 1199, alt: 'Trío de habitantes de Lunia aportado: una figura con varita luminosa, una figura de pelo blanco con cristales azules y una figura leyendo un libro; vestiduras violetas, blancas y doradas', roles: ['Varita', 'Cristales', 'Libro'], caption: 'Habitantes de Lunia · Conceptos visuales', peopleHeading: 'Los rostros de Lunia' },
     places: [
       { name: 'Ciudad de Lunia', kind: 'Ciudad', text: 'Torres claras rodeadas por agua y vegetación.' },
       { name: 'Academia de Lunia', kind: 'Academia', text: 'Una de las grandes siluetas que señala el mapa del valle.' },
@@ -94,7 +96,7 @@ export const regions = [
       { name: 'Templo de Uma', kind: 'Templo', text: 'El santuario situado en el extremo de las cascadas del mapa.' }
     ],
     life: 'Magia, sabiduría y armonía dan identidad a Lunia en el mapa. La academia, la abadía y los jardines dibujan su presentación visual. Sus estudios, oficios y formas de vida están en desarrollo; las afinidades mágicas de sus habitantes aún no se han anunciado.',
-    residents: [], residentsNote: 'Las personas que habitan el valle y sus instituciones están en desarrollo. Sus historias se incorporarán a este atlas.'
+    residents: [], residentsNote: 'Las figuras de Lunia dan rostro a esta presentación de la Academia. Sus nombres, vínculos e historias están en desarrollo.'
   }
 ];
 

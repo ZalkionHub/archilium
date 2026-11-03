@@ -119,3 +119,11 @@
 @media(min-width:701px) and (max-height:800px){.has-inhabitants-art .region-content{padding-top:90px;padding-bottom:16px}.has-inhabitants-art .region-title-block h2{font-size:clamp(34px,3.4vw,52px)}.region-inhabitants-art{height:clamp(230px,37vh,310px)}.has-inhabitants-art .region-title-block .eyebrow{margin-bottom:12px}}
 @media(max-width:700px){.has-inhabitants-art .region-content{padding-top:105px;gap:28px}.has-inhabitants-art .region-title-block{align-self:stretch}.has-inhabitants-art .region-title-block .eyebrow{font-size:10px;margin-bottom:22px}.has-inhabitants-art .region-title-block h2{font-size:clamp(31px,8.7vw,48px);margin-bottom:12px}.has-inhabitants-art .region-invitation{font-size:19px}.region-inhabitants-art{height:clamp(215px,67vw,320px);margin:20px -10px 12px}.region-inhabitants-art figcaption{font-size:8px}.has-inhabitants-art .region-visual-note{font-size:8px}.has-inhabitants-art .region-scenery{height:100%}.region-resident-roles>span{font-size:14px;padding:8px 10px}}
 @media(prefers-reduced-motion:reduce){.region-experience[data-art-ready=true] .region-landscape,.region-experience[data-people-ready=true] .region-inhabitants-art{animation:none!important;opacity:1;transform:none}}
+
+/* La Academia y el pueblo de Lunia deben conservarse legibles tras la ficha. */
+.region-experience[data-region=lunia] .region-inhabitants-art:before{background:radial-gradient(ellipse at 50% 85%,#a071d940,transparent 70%)}
+.region-experience[data-region=lunia] .region-resident-roles>span{color:#e6d6ff;border-color:#bfa2e577;background:#30224366}
+@media(min-width:701px){
+  .region-experience[data-region=lunia] .region-shade{background:linear-gradient(90deg,#080d134d 0,#080d131a 30%,#080d138c 60%,#080d13b3 100%),linear-gradient(0deg,#080d13ed 0,transparent 27%,transparent 78%,#080d1366)}
+  .region-experience[data-region=lunia] .region-story{text-shadow:0 1px 3px #04080d,0 1px 9px #04080d}
+}
