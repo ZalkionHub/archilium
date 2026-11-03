@@ -1,4 +1,4 @@
-import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261103-argor';
+import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261103-lunia-music';
 import { RegionEffects } from './world-map-effects.mjs';
 import { watchRegionArtwork } from './region-artwork.mjs?v=20261103-bocus-scene';
 
