@@ -66,6 +66,8 @@ export const regions = [
     summary: 'Pueblos, molinos, campos y costa. Entre los nombres de Argor está Kelus, el lugar del que procede Kalys.',
     shape: 'M435 665 L535 645 L640 605 L760 645 L890 625 L1060 665 L1170 640 L1320 710 L1410 815 L1380 900 L1180 920 L970 941 L770 941 L560 910 L380 880 L320 845 L360 740 Z M25 730 L70 665 L185 665 L280 745 L300 830 L230 880 L70 865 Z',
     camera: { x: 848, y: 737, scale: 1.8 }, music: null,
+    landscape: { src: 'assets/argor-campos-paisaje.png', position: '35% center', width: 1672, height: 941 },
+    inhabitantsArt: { src: 'assets/argor-campesinos-trio.png', width: 1536, height: 1024, alt: 'Trío campesino de Argor aportado: una figura con cesta de hortalizas, otra con pala y otra con cuernos sosteniendo espigas; ropa de trabajo en tonos tierra', roles: ['Huerto', 'Tierra', 'Cosecha'], caption: 'Vida campesina de Argor · Conceptos visuales', peopleHeading: 'Gentes del campo' },
     places: [
       { name: 'Kelus', kind: 'Pueblo de Kalys', text: 'El lugar de procedencia del protagonista de Archilium.' },
       { name: 'Villa Brisa', kind: 'Localidad', text: 'Un conjunto de casas entre campos y caminos.' },

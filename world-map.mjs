@@ -1,4 +1,4 @@
-import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261103-umen-music';
+import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261103-argor';
 import { RegionEffects } from './world-map-effects.mjs';
 import { watchRegionArtwork } from './region-artwork.mjs?v=20261103-bocus-scene';
 
@@ -40,7 +40,7 @@ export function renderRegionPanel(region) {
 
 export function renderRegionTab(region, tab) {
   if (tab === 'life') return `<div class="region-life"><span class="region-detail-kicker">El carácter de la región</span><p>${safe(region.life)}</p><p class="region-development">Mundo en desarrollo</p></div>`;
-  if (tab === 'people') return `<div class="region-people">${region.inhabitantsArt ? `<span class="region-detail-kicker">${safe(region.inhabitantsArt.peopleHeading || 'Los rostros de la región')}</span><div class="region-resident-roles">${region.inhabitantsArt.roles.map(role => `<span>${safe(role)}</span>`).join('')}</div>` : ''}${region.residents.map(person => `<button class="region-person" data-panel="ficha-${person.id}"><span class="region-person-initial" aria-hidden="true">${person.name[0]}</span><span><strong>${person.name}</strong><small>${safe(person.role)}</small></span>${icon('arrow')}</button>`).join('')}<p>${safe(region.residentsNote)}</p>${region.residents.length ? '' : '<span class="region-development">Historias en desarrollo</span>'}</div>`;
+  if (tab === 'people') return `<div class="region-people">${region.inhabitantsArt ? `<span class="region-detail-kicker">${safe(region.inhabitantsArt.peopleHeading || 'Los rostros de la región')}</span><div class="region-resident-roles">${region.inhabitantsArt.roles.map(role => `<span>${safe(role)}</span>`).join('')}</div>` : ''}${region.inhabitantsArt && region.residents.length ? '<span class="region-detail-kicker">Personajes del compendio</span>' : ''}${region.residents.map(person => `<button class="region-person" data-panel="ficha-${person.id}"><span class="region-person-initial" aria-hidden="true">${person.name[0]}</span><span><strong>${person.name}</strong><small>${safe(person.role)}</small></span>${icon('arrow')}</button>`).join('')}<p>${safe(region.residentsNote)}</p>${region.residents.length ? '' : '<span class="region-development">Historias en desarrollo</span>'}</div>`;
   return `<ul class="region-places">${region.places.map(place => `<li><span class="region-place-mark" aria-hidden="true">◇</span><div><h3>${safe(place.name)}</h3><span>${safe(place.kind)}</span><p>${safe(place.text)}</p></div></li>`).join('')}</ul>`;
 }
 
