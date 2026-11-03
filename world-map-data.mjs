@@ -29,13 +29,15 @@ export const regions = [
     summary: 'Una ciudad amurallada, un castillo y las cumbres nevadas. El estandarte de Velan reúne honor, corona y unidad.',
     shape: 'M480 125 L525 70 L605 0 L1190 0 L1230 90 L1210 175 L1180 240 L1120 300 L1040 326 L1000 340 L920 315 L745 325 L640 285 L580 290 L570 235 L535 175 Z',
     camera: { x: 877, y: 220, scale: 2.25 }, music: null,
+    landscape: { src: 'assets/velan-castillo-paisaje.png', position: '36% center', width: 1672, height: 941 },
+    inhabitantsArt: { src: 'assets/velan-faccion-trio.png', width: 1536, height: 1024, alt: 'Facción de Velan aportada: una figura de pelo claro con capa, una figura coronada con espada y una figura acorazada con lanza y escudo; tonos blancos, azules y dorados', roles: ['Capa', 'Corona', 'Escudo'], caption: 'Facción de Velan · Conceptos visuales', peopleHeading: 'La facción de Velan' },
     places: [
       { name: 'Ciudad de Velan', kind: 'Ciudad', text: 'Murallas, tejados y caminos al pie del castillo.' },
       { name: 'Castillo de Velan', kind: 'Castillo', text: 'Las torres que dominan el paisaje de la ladera.' },
       { name: 'Templo de Fey', kind: 'Templo', text: 'Un santuario entre las montañas y la vegetación del mapa.' }
     ],
     life: 'Honor, corona y unidad identifican a Velan en el mapa. Su ciudad, sus murallas y su castillo componen esta primera mirada a la región. La vida cotidiana y sus oficios están en desarrollo.',
-    residents: [], residentsNote: 'Los habitantes de Velan tendrán aquí sus propias historias. Sus vínculos con la ciudad y el castillo están en desarrollo.'
+    residents: [], residentsNote: 'La facción de Velan reúne estas tres figuras en su presentación. Sus nombres, vínculos e historias están en desarrollo.'
   },
   {
     id: 'umen', name: 'Llanura Umen', shortName: 'Umen',

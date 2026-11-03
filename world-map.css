@@ -121,6 +121,8 @@
 @media(prefers-reduced-motion:reduce){.region-experience[data-art-ready=true] .region-landscape,.region-experience[data-people-ready=true] .region-inhabitants-art{animation:none!important;opacity:1;transform:none}}
 
 /* La Academia y el pueblo de Lunia deben conservarse legibles tras la ficha. */
+.region-experience[data-region=velan] .region-inhabitants-art:before{background:radial-gradient(ellipse at 50% 85%,#628fd940,transparent 70%)}
+.region-experience[data-region=velan] .region-resident-roles>span{color:#dceaff;border-color:#9bbce077;background:#1d304766}
 .region-experience[data-region=lunia] .region-inhabitants-art:before{background:radial-gradient(ellipse at 50% 85%,#a071d940,transparent 70%)}
 .region-experience[data-region=lunia] .region-resident-roles>span{color:#e6d6ff;border-color:#bfa2e577;background:#30224366}
 @media(min-width:701px){
