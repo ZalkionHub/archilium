@@ -10,7 +10,7 @@ export const regions = [
     shape: 'M0 185 L80 124 L225 130 L320 115 L480 125 L535 175 L570 235 L555 300 L590 360 L530 440 L480 505 L430 555 L475 600 L435 637 L320 678 L200 625 L130 628 L70 580 L0 565 Z',
     camera: { x: 331, y: 381, scale: 2.35 },
     landscape: { src: 'assets/bocus-paisaje-concepto.png', position: '43% center', width: 1672, height: 941 },
-    inhabitantsArt: { src: 'assets/bocus-habitantes-trio.png', width: 1448, height: 1086, alt: 'Ilustración aportada de los habitantes de Bocus: un minero con pico y farol, un herrero con martillo y un mago con báculo', roles: ['Minero', 'Herrero', 'Mago'] },
+    inhabitantsArt: { src: 'assets/bocus-habitantes-trio.png', width: 1448, height: 1086, alt: 'Ilustración aportada de los habitantes de Bocus: un minero con pico y farol, un herrero con martillo y un mago con báculo', roles: ['Minero', 'Herrero', 'Mago'], caption: 'Habitantes de Bocus · Conceptos visuales', peopleHeading: 'Los rostros de la forja' },
     music: { id: 'chiron', src: 'assets/forge-of-chiron.mp3', name: 'Forge of Chiron', context: 'Laderas de Bocus' },
     places: [
       { name: 'Bocus', kind: 'Ciudad', text: 'Arquitectura de piedra entre las laderas y los cauces de lava.' },
@@ -45,6 +45,7 @@ export const regions = [
     shape: 'M590 360 L580 290 L640 285 L745 325 L920 315 L1000 340 L1040 326 L1120 300 L1210 345 L1270 480 L1275 540 L1170 640 L1060 665 L890 625 L760 645 L640 605 L535 645 L435 637 L475 600 L430 555 L480 505 L530 440 Z',
     camera: { x: 846, y: 481, scale: 2.0 }, music: null,
     landscape: { src: 'assets/argentia-ciudad-mercantil.png', position: '18% center', width: 1672, height: 941 },
+    inhabitantsArt: { src: 'assets/argentia-mercantiles-trio.png', width: 1536, height: 1024, alt: 'Trío de mercantiles de Argentia aportado: una figura con balanza y libro, otra con monedas y otra con cuernos, farol y mercancías; vestimenta verde y dorada', roles: ['Balanza', 'Monedas', 'Mercancías'], caption: 'Mercantiles de Argentia · Conceptos visuales', peopleHeading: 'Los rostros del comercio' },
     places: [
       { name: 'Argentia', kind: 'Ciudad mercantil', text: 'La gran ciudad que ocupa el centro de los campos y caminos.' },
       { name: 'Ruvis', kind: 'Localidad', text: 'Tejados y caminos junto a las laderas occidentales.' },
@@ -53,7 +54,7 @@ export const regions = [
       { name: 'Remo', kind: 'Localidad', text: 'Un punto del mapa entre caminos y tierras de cultivo.' }
     ],
     life: 'Comercio, encuentro y prosperidad aparecen en el estandarte de Umen. Los campos y las rutas que muestra el mapa invitan a explorar ese carácter de lugar de paso. Sus mercados, oficios y comunidades están en desarrollo.',
-    residents: [], residentsNote: 'Cada camino podrá llevar a una historia. Las personas que darán vida a Umen y a sus localidades están en desarrollo.'
+    residents: [], residentsNote: 'Los mercantiles de Argentia dan rostro al comercio de esta presentación. Sus nombres, vínculos e historias están en desarrollo.'
   },
   {
     id: 'argor', name: 'Península de Argor', shortName: 'Argor',
