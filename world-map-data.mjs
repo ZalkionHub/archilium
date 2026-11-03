@@ -6,9 +6,11 @@ export const regions = [
     id: 'bocus', name: 'Laderas de Bocus', shortName: 'Bocus',
     motto: 'Forja · Tradición · Fortaleza', theme: 'embers', color: '#f4a36b',
     heading: 'Donde el fuego\ntoma forma.',
-    summary: 'Montañas volcánicas, ríos de lava y fortalezas de piedra. En el mapa de Archilium, Bocus lleva el estandarte de la forja.',
+    summary: 'Montañas volcánicas, ríos de lava y fortalezas de piedra. Bocus lleva el estandarte de la forja.',
     shape: 'M0 185 L80 124 L225 130 L320 115 L480 125 L535 175 L570 235 L555 300 L590 360 L530 440 L480 505 L430 555 L475 600 L435 637 L320 678 L200 625 L130 628 L70 580 L0 565 Z',
     camera: { x: 331, y: 381, scale: 2.35 },
+    landscape: { src: 'assets/bocus-paisaje-concepto.png', position: '43% center', width: 1672, height: 941 },
+    inhabitantsArt: { src: 'assets/bocus-habitantes-trio.png', width: 1448, height: 1086, alt: 'Ilustración aportada de los habitantes de Bocus: un minero con pico y farol, un herrero con martillo y un mago con báculo', roles: ['Minero', 'Herrero', 'Mago'] },
     music: { id: 'chiron', src: 'assets/forge-of-chiron.mp3', name: 'Forge of Chiron', context: 'Laderas de Bocus' },
     places: [
       { name: 'Bocus', kind: 'Ciudad', text: 'Arquitectura de piedra entre las laderas y los cauces de lava.' },
@@ -18,7 +20,7 @@ export const regions = [
       { name: 'Templo de Vex', kind: 'Templo', text: 'Una silueta iluminada por el fuego en el extremo de las laderas.' }
     ],
     life: 'Forja, tradición y fortaleza son las tres palabras de su estandarte. Las minas, la piedra y el fuego construyen la identidad visual de esta región. Los talleres, sus oficios y las historias de sus habitantes están en desarrollo.',
-    residents: [], residentsNote: 'Las historias de quienes viven entre estas laderas todavía se están forjando. Conocerás aquí a sus habitantes a medida que se desarrolle el mundo.'
+    residents: [], residentsNote: 'Un minero, un herrero y un mago dan rostro a esta presentación de Bocus. Sus nombres, vínculos e historias están en desarrollo.'
   },
   {
     id: 'velan', name: 'Ladera Velan', shortName: 'Velan',

@@ -1,5 +1,6 @@
-import { regions, mapArtwork, getRegion } from './world-map-data.mjs';
+import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261103-bocus-scene';
 import { RegionEffects } from './world-map-effects.mjs';
+import { watchRegionArtwork } from './region-artwork.mjs?v=20261103-bocus-scene';
 
 const icon = name => `<svg aria-hidden="true"><use href="#icon-${name}"/></svg>`;
 const safe = text => String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -27,19 +28,19 @@ export function renderRegionPanel(region) {
   // Clamp the camera to the artwork so that mobile/ultrawide never reveals blank edges.
   const tx = Math.min(0, Math.max(1672 * (1 - scale), 836 - x * scale));
   const ty = Math.min(0, Math.max(941 * (1 - scale), 470.5 - y * scale));
-  return `<article class="region-experience" data-region="${region.id}" data-effects-paused="false" style="--region-color:${region.color};--camera-x:${tx}px;--camera-y:${ty}px;--camera-scale:${scale}">
-    <div class="region-scenery" aria-hidden="true"><svg class="region-panorama" viewBox="0 0 1672 941" preserveAspectRatio="xMidYMid slice"><g class="region-camera"><image href="${mapArtwork}" width="1672" height="941"/></g></svg><div class="region-color-wash region-wash-${region.theme}"></div></div>
+  return `<article class="region-experience ${region.inhabitantsArt ? 'has-inhabitants-art' : ''}" data-region="${region.id}" data-effects-paused="false" data-art-ready="false" data-people-ready="false" style="--region-color:${region.color};--camera-x:${tx}px;--camera-y:${ty}px;--camera-scale:${scale}">
+    <div class="region-scenery" aria-hidden="true"><svg class="region-panorama" viewBox="0 0 1672 941" preserveAspectRatio="xMidYMid slice"><g class="region-camera"><image href="${mapArtwork}" width="1672" height="941"/></g></svg>${region.landscape ? `<img class="region-landscape" src="${region.landscape.src}" alt="" width="${region.landscape.width}" height="${region.landscape.height}" decoding="async" fetchpriority="high" style="object-position:${region.landscape.position}">` : ''}<div class="region-color-wash region-wash-${region.theme}"></div></div>
     <div class="region-shade" aria-hidden="true"></div><canvas class="region-weather" aria-hidden="true"></canvas>
-    <div class="region-content"><div class="region-title-block"><p class="eyebrow">El atlas de Archilium</p><p class="region-motto">${safe(region.motto)}</p><h2 id="dialog-title">${safe(region.name)}</h2><p class="region-invitation">${safe(region.heading).replace('\n','<br>')}</p><span class="region-visual-note">Una mirada animada al mapa · En desarrollo</span></div>
+    <div class="region-content"><div class="region-title-block"><p class="eyebrow">El atlas de Archilium</p><p class="region-motto">${safe(region.motto)}</p><h2 id="dialog-title">${safe(region.name)}</h2><p class="region-invitation">${safe(region.heading).replace('\n',region.inhabitantsArt?' ':'<br>')}</p>${region.inhabitantsArt ? `<figure class="region-inhabitants-art"><img src="${region.inhabitantsArt.src}" alt="${safe(region.inhabitantsArt.alt)}" width="${region.inhabitantsArt.width}" height="${region.inhabitantsArt.height}" decoding="async"><figcaption>Habitantes de Bocus · Conceptos visuales</figcaption></figure>` : ''}<span class="region-visual-note">${region.landscape ? 'Paisaje conceptual · Historias en desarrollo' : 'Una mirada animada al mapa · En desarrollo'}</span></div>
     <div class="region-story"><p class="region-summary">${safe(region.summary)}</p><div class="region-tabs" role="tablist" aria-label="Descubrir ${safe(region.name)}"><button role="tab" id="region-tab-places" aria-controls="region-tab-content" aria-selected="true" tabindex="0" data-region-tab="places">Lugares</button><button role="tab" id="region-tab-life" aria-controls="region-tab-content" aria-selected="false" tabindex="-1" data-region-tab="life">Vida y oficios</button><button role="tab" id="region-tab-people" aria-controls="region-tab-content" aria-selected="false" tabindex="-1" data-region-tab="people">Habitantes</button></div><div class="region-tab-content" id="region-tab-content" role="tabpanel" aria-labelledby="region-tab-places" tabindex="0">${renderRegionTab(region, 'places')}</div></div></div>
     <div class="region-bottom"><div class="region-listening"><button class="audio-panel-toggle region-audio-toggle" aria-label="Reproducir música" aria-pressed="false">${icon('play')}</button><div><span>${region.music ? 'La música de Bocus' : 'Ambiente del reino'}</span><strong>${region.music?.name || 'Regal Welcome'}</strong><small data-region-audio-state>Preparando música…</small></div><button class="region-mute-toggle" data-audio-mute aria-label="Silenciar música" aria-pressed="false">${icon('volume')}</button><label class="region-volume"><span class="sr-only">Volumen de la música regional</span><input type="range" min="0" max="1" step="0.01" value="0.35" data-audio-volume aria-label="Volumen de la música regional"></label></div><button class="region-effects-toggle" data-region-effects aria-pressed="false">${icon('pause')}<span>Pausar efectos</span></button></div>
-    <nav class="region-switcher" aria-label="Viajar a otra región">${regions.map(item => `<button data-panel="region-${item.id}" ${item === region ? 'aria-current="page"' : ''}><span style="background:${item.color}"></span>${item.shortName}</button>`).join('')}</nav>
+    <nav class="region-switcher" aria-label="Viajar a otra región">${regions.map(item => `<button data-panel="region-${item.id}" ${item.id === region.id ? 'aria-current="page"' : ''}><span style="background:${item.color}"></span>${item.shortName}</button>`).join('')}</nav>
   </article>`;
 }
 
 export function renderRegionTab(region, tab) {
   if (tab === 'life') return `<div class="region-life"><span class="region-detail-kicker">El carácter de la región</span><p>${safe(region.life)}</p><p class="region-development">Mundo en desarrollo</p></div>`;
-  if (tab === 'people') return `<div class="region-people">${region.residents.map(person => `<button class="region-person" data-panel="ficha-${person.id}"><span class="region-person-initial" aria-hidden="true">${person.name[0]}</span><span><strong>${person.name}</strong><small>${safe(person.role)}</small></span>${icon('arrow')}</button>`).join('')}<p>${safe(region.residentsNote)}</p>${region.residents.length ? '' : '<span class="region-development">Historias en desarrollo</span>'}</div>`;
+  if (tab === 'people') return `<div class="region-people">${region.inhabitantsArt ? `<span class="region-detail-kicker">Los rostros de la forja</span><div class="region-resident-roles">${region.inhabitantsArt.roles.map(role => `<span>${safe(role)}</span>`).join('')}</div>` : ''}${region.residents.map(person => `<button class="region-person" data-panel="ficha-${person.id}"><span class="region-person-initial" aria-hidden="true">${person.name[0]}</span><span><strong>${person.name}</strong><small>${safe(person.role)}</small></span>${icon('arrow')}</button>`).join('')}<p>${safe(region.residentsNote)}</p>${region.residents.length ? '' : '<span class="region-development">Historias en desarrollo</span>'}</div>`;
   return `<ul class="region-places">${region.places.map(place => `<li><span class="region-place-mark" aria-hidden="true">◇</span><div><h3>${safe(place.name)}</h3><span>${safe(place.kind)}</span><p>${safe(place.text)}</p></div></li>`).join('')}</ul>`;
 }
 
@@ -50,6 +51,7 @@ export function initWorldMap(doc, { player, onPreview = () => {} } = {}) {
   const stage = doc.querySelector('.atlas-stage');
   let activeRegion = null;
   let effects = null;
+  let releaseArtwork = () => {};
   let manualPause = false;
   const reduced = win.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -103,6 +105,8 @@ export function initWorldMap(doc, { player, onPreview = () => {} } = {}) {
     const paused = manualPause || reduced.matches || doc.hidden;
     const experience = doc.querySelector('.region-experience');
     experience.dataset.effectsPaused = String(paused);
+    // Al detener la entrada, conservar el arte visible al volver a reanudar.
+    if (paused) experience.dataset.artStatic = 'true';
     const button = experience.querySelector('[data-region-effects]');
     button.disabled = reduced.matches;
     button.setAttribute('aria-pressed', String(manualPause || reduced.matches));
@@ -111,6 +115,8 @@ export function initWorldMap(doc, { player, onPreview = () => {} } = {}) {
   }
 
   function leaveRegion() {
+    releaseArtwork();
+    releaseArtwork = () => {};
     effects?.destroy();
     effects = null;
     activeRegion = null;
@@ -120,6 +126,7 @@ export function initWorldMap(doc, { player, onPreview = () => {} } = {}) {
     leaveRegion();
     hoverCard.hidden = true;
     activeRegion = region;
+    releaseArtwork = watchRegionArtwork(doc.querySelector('.region-experience'));
     previewRegion(region.id);
     effects = new RegionEffects(doc.querySelector('.region-weather'), region.theme, win);
     player.selectTrack(region.music || undefined);
