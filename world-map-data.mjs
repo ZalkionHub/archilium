@@ -45,7 +45,8 @@ export const regions = [
     heading: 'Caminos que\nse encuentran.',
     summary: 'Argentia, la ciudad mercantil, entre campos dorados, ríos y puentes. Un punto de encuentro en el corazón de Llanura Umen.',
     shape: 'M590 360 L580 290 L640 285 L745 325 L920 315 L1000 340 L1040 326 L1120 300 L1210 345 L1270 480 L1275 540 L1170 640 L1060 665 L890 625 L760 645 L640 605 L535 645 L435 637 L475 600 L430 555 L480 505 L530 440 Z',
-    camera: { x: 846, y: 481, scale: 2.0 }, music: null,
+    camera: { x: 846, y: 481, scale: 2.0 },
+    music: { id: 'umen', src: 'assets/llanura-umen.mp3', name: 'Llanura Umen', context: 'Llanura Umen' },
     landscape: { src: 'assets/argentia-ciudad-mercantil.png', position: '18% center', width: 1672, height: 941 },
     inhabitantsArt: { src: 'assets/argentia-mercantiles-trio.png', width: 1536, height: 1024, alt: 'Trío de mercantiles de Argentia aportado: una figura con balanza y libro, otra con monedas y otra con cuernos, farol y mercancías; vestimenta verde y dorada', roles: ['Balanza', 'Monedas', 'Mercancías'], caption: 'Mercantiles de Argentia · Conceptos visuales', peopleHeading: 'Los rostros del comercio' },
     places: [
