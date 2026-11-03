@@ -1,8 +1,8 @@
 import { characters, races, creatures, compendium } from './lore-data.mjs';
 import { initAudioPlayer } from './audio-player.mjs?v=20261103-map';
 import { initCinematicMotion } from './cinematic-motion.mjs';
-import { regions, getRegion } from './world-map-data.mjs?v=20261103-furgan';
-import { initWorldMap, renderRegionPanel } from './world-map.mjs?v=20261103-furgan';
+import { regions, getRegion } from './world-map-data.mjs?v=20261104-furgan-trio';
+import { initWorldMap, renderRegionPanel } from './world-map.mjs?v=20261104-furgan-trio';
 
 const $ = (selector, parent = document) => parent.querySelector(selector);
 const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];

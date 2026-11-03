@@ -1,7 +1,7 @@
-import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261103-furgan';
-import { RegionEffects } from './world-map-effects.mjs?v=20261103-furgan';
+import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261104-furgan-trio';
+import { RegionEffects } from './world-map-effects.mjs?v=20261104-furgan-trio';
 import { watchRegionArtwork } from './region-artwork.mjs?v=20261103-bocus-scene';
-import { RegionSlideshow } from './region-slideshow.mjs?v=20261103-furgan';
+import { RegionSlideshow } from './region-slideshow.mjs?v=20261104-furgan-trio';
 
 const icon = name => `<svg aria-hidden="true"><use href="#icon-${name}"/></svg>`;
 const safe = text => String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));

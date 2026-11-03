@@ -118,7 +118,7 @@ export const regions = [
     shape: 'M1298 410 L1380 441 L1484 419 L1580 444 L1672 425 L1672 729 L1598 757 L1568 795 L1485 838 L1392 879 L1281 839 L1204 810 L1220 713 L1180 632 L1275 609 L1246 540 L1286 480 Z',
     camera: { x: 1460, y: 651, scale: 2.4 }, music: null,
     landscape: { src: 'assets/furgan-pantano-paisaje.png', position: '51% center', width: 1672, height: 941 },
-    inhabitantsArt: { src: 'assets/furgan-habitantes-trio.png', width: 1536, height: 1024, alt: 'Tres reptilianos de Furgan: una artesana con vasija a la izquierda, una representante de la tribu con manto verde y bastón en el centro, y un recolector con cesta de plantas a la derecha', roles: ['Artesana', 'Representante', 'Recolector'], caption: 'Habitantes de Furgan · Conceptos visuales', peopleHeading: 'Las tribus del pantano' },
+    inhabitantsArt: { src: 'assets/furgan-habitantes-trio-aportado.png', width: 1536, height: 1024, alt: 'Trío reptiliano aportado para Furgan: figura con plantas a la izquierda, figura con tocado en el centro y figura con vasija y herramientas a la derecha', roles: ['Artesana', 'Representante', 'Recolector'], caption: 'Habitantes de Furgan · Conceptos visuales', peopleHeading: 'Las tribus del pantano' },
     leader: { id: 'khylura', name: 'Khylura', role: 'Rey de las tribus' },
     places: [
       { name: 'Aldea Claveral', kind: 'Aldea', text: 'Casas y plataformas entre la vegetación de la parte norte del pantano.' },
