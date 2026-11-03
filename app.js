@@ -1,6 +1,8 @@
 import { characters, races, creatures, compendium } from './lore-data.mjs';
 import { initAudioPlayer } from './audio-player.mjs';
 import { initCinematicMotion } from './cinematic-motion.mjs';
+import { regions, getRegion } from './world-map-data.mjs';
+import { initWorldMap, renderRegionPanel } from './world-map.mjs';
 
 const $ = (selector, parent = document) => parent.querySelector(selector);
 const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
@@ -23,6 +25,7 @@ let currentPanel = '';
 let compendiumCategory = 'personajes';
 let returnFocus = null;
 let motionAssets = {};
+let atlas = null;
 const motion = initCinematicMotion(document, icon);
 
 const presentation = () => motionAssets.hero
@@ -60,12 +63,13 @@ const panels = {
   creadores: () => `${heading('Comparte el comienzo','Recursos para creadores','Un punto de partida para vídeos, directos y publicaciones sobre Archilium.')}<p class="panel-copy">Un RPG de acción 2D en pixel art, con Kalys como protagonista fijo. El juego está en desarrollo para PC y aún no tiene fecha de lanzamiento anunciada.</p><div class="creator-list"><div><h3>Identidad del juego</h3><p>Logotipo sobre fondo transparente y presentación animada de la corona.</p></div><div><h3>Imágenes del reino</h3><p>Portada ilustrada, estudio conceptual en pixel art y una captura real del prototipo de Kelus.</p></div><div><h3>Información para tu contenido</h3><p>Descripción, formato del juego y estado actual del proyecto.</p></div><div><h3>Al compartir</h3><p>Acredita el nombre del juego. Distingue arte conceptual y material del prototipo.</p></div></div>${download('assets/archilium-creadores.zip','Descargar recursos para creadores')}${motionDownloads()}${motionAssets.projectUrl ? `<div class="motion-links"><a href="${motionAssets.projectUrl}" target="_blank" rel="noopener">Proyecto editable en Jitter ${icon('arrow')}</a></div>` : ''}<p class="panel-caption">Las animaciones presentan el arte y la identidad de la web. La demo pública y el tráiler oficial siguen pendientes.</p>`,
   plataformas: () => `${heading('La aventura está en camino','Nos vemos en el reino.')}<div class="platform-panel">${icon('steam')}<div><h3>PC · Steam</h3><p>En desarrollo. Fecha de lanzamiento por anunciar.</p></div></div><p class="panel-copy">La primera etapa de Archilium será una aventura single player. Los enlaces de la tienda y las especificaciones estarán disponibles cuando se anuncien.</p><button class="ornate-button" data-panel="preguntas">Consultar preguntas frecuentes${icon('arrow')}</button>`,
   galeria: () => `${heading('Una ventana al mundo','Arte de Archilium','Ilustraciones conceptuales de presentación y dirección visual.')}<img class="gallery-image" id="gallery-image" src="assets/archilium-pixel-concept-grounded.png" alt="Escena conceptual de Archilium en pixel art"><div class="gallery-toggle" aria-label="Seleccionar imagen"><button data-gallery="pixel" aria-pressed="true">Estudio en pixel art</button><button data-gallery="hero" aria-pressed="false">Portada ilustrada</button></div>${download('assets/archilium-pixel-concept-grounded.png','Descargar estudio visual')}${download('assets/archilium-hero-grounded.png','Descargar portada')}`,
-  creditos: () => `${heading('Detrás de esta ventana','Créditos de la web')}<div class="credits-list"><p><strong>Archilium: El Reino Sucumbido</strong><br>Universo y dirección del proyecto: Zalkion.</p><p>Ilustraciones conceptuales originales generadas con ImageGen para esta presentación. No representan capturas del videojuego ni diseños definitivos de sus personajes. La captura de Kelus procede del prototipo real y se identifica por separado. El retrato de Kalys campesino es una nueva ilustración conceptual original generada para esta web.</p><p>Logotipo de corona dorada aportado por el propietario. Animaciones de la ciudadela y de la corona creadas en Jitter con esos recursos originales.</p><p>Música de la web: «Regal Welcome», pista aportada por el propietario. El paquete para creadores conserva el boceto original «Bruma de Archilium».</p><p>Tipografías: Cinzel y Barlow Condensed, distribuidas bajo licencia SIL Open Font License.<br><a href="assets/cinzel-OFL.txt">Licencia Cinzel</a> · <a href="assets/barlow-condensed-OFL.txt">Licencia Barlow Condensed</a></p><p>Razas y criaturas: conceptos en desarrollo. Las fichas ampliadas de personajes incluyen retratos narrativos sujetos a revisión.</p><p>La web no utiliza cookies de seguimiento ni formularios de recogida de datos.</p></div>`
+  creditos: () => `${heading('Detrás de esta ventana','Créditos de la web')}<div class="credits-list"><p><strong>Archilium: El Reino Sucumbido</strong><br>Universo y dirección del proyecto: Zalkion.</p><p>Ilustraciones conceptuales originales generadas con ImageGen para esta presentación. No representan capturas del videojuego ni diseños definitivos de sus personajes. La captura de Kelus procede del prototipo real y se identifica por separado. El retrato de Kalys campesino es una nueva ilustración conceptual original generada para esta web.</p><p>Logotipo de corona dorada y mapa ilustrado del Reino de Archilium aportados por el propietario. Animaciones de la ciudadela y de la corona creadas en Jitter con esos recursos originales. El atlas anima el mapa con cámara y efectos visuales para esta web.</p><p>Música de la web: «Regal Welcome» y «Forge of Chiron», pistas aportadas por el propietario. «Forge of Chiron» acompaña la visita a Laderas de Bocus. El paquete para creadores conserva el boceto original «Bruma de Archilium».</p><p>Tipografías: Cinzel y Barlow Condensed, distribuidas bajo licencia SIL Open Font License.<br><a href="assets/cinzel-OFL.txt">Licencia Cinzel</a> · <a href="assets/barlow-condensed-OFL.txt">Licencia Barlow Condensed</a></p><p>Razas y criaturas: conceptos en desarrollo. Las fichas ampliadas de personajes incluyen retratos narrativos sujetos a revisión. Las historias de los habitantes de las regiones están en desarrollo.</p><p>La web no utiliza cookies de seguimiento ni formularios de recogida de datos.</p></div>`
 };
 
 for(const [category,entries] of [['personajes',characters],['razas',races],['criaturas',creatures]]){
   for(const entry of entries) panels['ficha-'+entry.id]=()=>loreProfile(entry,category);
 }
+for(const region of regions) panels['region-'+region.id] = () => renderRegionPanel(region);
 
 function closeMenu() {
   navigation.classList.remove('is-open');
@@ -88,6 +92,11 @@ function showPanel(name, updateHistory = true, category = 'personajes') {
   }
   closeMenu();
   currentPanel = name;
+  atlas?.leaveRegion();
+  const region = name.startsWith('region-') ? getRegion(name.slice(7)) : null;
+  dialog.classList.toggle('is-region', Boolean(region));
+  $('.dialog-close').innerHTML = region ? `Volver al mapa ${icon('close')}` : icon('close');
+  $('.dialog-close').setAttribute('aria-label', region ? 'Volver al mapa' : 'Cerrar ventana');
   $$('video', dialogBody).forEach(video => video.pause());
   compendiumCategory = Object.hasOwn(compendium,category) ? category : 'personajes';
   dialogBody.innerHTML = panels[name]();
@@ -96,6 +105,7 @@ function showPanel(name, updateHistory = true, category = 'personajes') {
   if(name === 'audio') player.refreshUI();
   if(!dialog.open) dialog.showModal();
   motion.setModalOpen(true);
+  if(region) atlas?.enterRegion(region); else player.selectTrack();
   $('.dialog-close').focus();
   if(updateHistory) history.pushState({panel:name,category:compendiumCategory},'',`#${name}`);
 }
@@ -105,14 +115,21 @@ function closePanel(clearHash = true) {
   $$('video', dialogBody).forEach(video => video.pause());
   const gif = $('#corona-motion');
   if(gif) gif.src = 'assets/archilium-corona-dorada.png';
+  const wasRegion = dialog.classList.contains('is-region');
+  atlas?.leaveRegion();
+  player.selectTrack();
   dialog.close();
+  dialog.classList.remove('is-region');
   motion.setModalOpen(false);
   currentPanel = '';
-  if(clearHash && panels[location.hash.slice(1)]) history.replaceState({},'',location.pathname+location.search);
+  if(clearHash && panels[location.hash.slice(1)]) history.replaceState({},'',location.pathname+location.search+(wasRegion?'#mapa':''));
+  if(wasRegion) $('#mapa').scrollIntoView({block:'center',behavior:'instant'});
   if(returnFocus instanceof HTMLElement && document.contains(returnFocus)) returnFocus.focus({preventScroll:true});
 }
 
 document.addEventListener('click', event => {
+  const regionLink = event.target.closest('[data-region-id],[data-atlas-enter]');
+  if(regionLink) { event.preventDefault(); showPanel('region-'+(regionLink.dataset.regionId || regionLink.dataset.atlasEnter)); return; }
   const panelLink = event.target.closest('[data-panel]');
   if(panelLink) { event.preventDefault(); showPanel(panelLink.dataset.panel,true,panelLink.dataset.openCategory || 'personajes'); return; }
   if(event.target.closest('[data-close-dialog],.dialog-close')) { event.preventDefault(); closePanel(); return; }
@@ -165,6 +182,7 @@ document.addEventListener('input',event => { if(event.target.id==='compendium-se
 window.addEventListener('popstate',event=>{const panel=location.hash.slice(1);if(panels[panel])showPanel(panel,false,event.state?.category||'personajes');else closePanel(false);});
 
 const player = initAudioPlayer(document, icon);
+atlas = initWorldMap(document, { player });
 fetch('motion-assets.json').then(response => {
   if(!response.ok) throw new Error('Motion assets unavailable');
   return response.json();
