@@ -1,4 +1,4 @@
-import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261103-bocus-scene';
+import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261103-argentia';
 import { RegionEffects } from './world-map-effects.mjs';
 import { watchRegionArtwork } from './region-artwork.mjs?v=20261103-bocus-scene';
 
