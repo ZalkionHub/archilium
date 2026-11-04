@@ -236,3 +236,9 @@
   .has-inhabitants-art .region-tabs{margin-bottom:14px}
   .has-inhabitants-art .region-tab-content{height:clamp(150px,22vh,180px)}
 }
+
+/* La imagen decodificada ya está pintada cuando empieza el acercamiento. */
+.region-experience[data-entry-prepared=true][data-art-ready=true] .region-slideshow-stage,
+.region-experience[data-entry-prepared=true][data-art-ready=true] .region-landscape:not(.region-slide){opacity:1;animation:region-scene-enter 1.35s ease-out both}
+@keyframes region-scene-enter{from{opacity:1;transform:scale(1.065)}to{opacity:1;transform:scale(1)}}
+.region-experience[data-art-static=true][data-entry-prepared=true] .region-slideshow-stage{animation:none;opacity:1;transform:none}

@@ -1,4 +1,4 @@
-// La escena conserva el mapa bajo el paisaje hasta que la imagen está disponible.
+// La entrada instala el paisaje preparado; se vigilan también las cargas del trío.
 // El cierre elimina listeners para que una descarga tardía no reactive otra vista.
 export function watchRegionArtwork(experience) {
   let disposed = false;

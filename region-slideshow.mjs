@@ -13,14 +13,15 @@ export class RegionSlideshow {
     this.label = this.controls.querySelector('[data-slide-label]');
     this.description = this.controls.querySelector('[data-scene-description]');
     this.status = this.controls.querySelector('[data-slide-status]');
-    this.current = 0;
+    const initial = Number(experience.dataset.initialSlide) || 0;
+    this.current = this.images[initial] ? initial : 0;
     this.pending = null;
     this.timer = null;
     this.loadingTimer = null;
     this.blocked = true;
     this.manualPause = false;
     this.disposed = false;
-    this.states = this.images.map((image, i) => i === 0 ? image.complete ? image.naturalWidth > 0 ? 'ready' : 'failed' : 'loading' : 'idle');
+    this.states = this.images.map((image, i) => i === this.current ? image.complete ? image.naturalWidth > 0 ? 'ready' : 'failed' : 'loading' : 'idle');
     this.listeners = this.images.map((image, index) => {
       const load = () => this.loaded(index);
       const error = () => this.failed(index);

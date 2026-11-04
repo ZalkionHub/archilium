@@ -1,8 +1,9 @@
+import { RegionEntry, mountEntryImage } from './region-entry.mjs?v=20261104-landscape-entry';
 import { characters, races, creatures, compendium } from './lore-data.mjs';
 import { initAudioPlayer } from './audio-player.mjs?v=20261103-map';
 import { initCinematicMotion } from './cinematic-motion.mjs';
-import { regions, getRegion } from './world-map-data.mjs?v=20261104-regional-scenes';
-import { initWorldMap, renderRegionPanel } from './world-map.mjs?v=20261104-regional-scenes';
+import { regions, getRegion } from './world-map-data.mjs?v=20261104-landscape-entry';
+import { initWorldMap, renderRegionPanel } from './world-map.mjs?v=20261104-landscape-entry';
 
 const $ = (selector, parent = document) => parent.querySelector(selector);
 const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
@@ -26,6 +27,8 @@ let compendiumCategory = 'personajes';
 let returnFocus = null;
 let motionAssets = {};
 let atlas = null;
+let pendingRegion = null;
+const regionEntry = new RegionEntry(window);
 const motion = initCinematicMotion(document, icon);
 
 const presentation = () => motionAssets.hero
@@ -69,7 +72,7 @@ const panels = {
 for(const [category,entries] of [['personajes',characters],['razas',races],['criaturas',creatures]]){
   for(const entry of entries) panels['ficha-'+entry.id]=()=>loreProfile(entry,category);
 }
-for(const region of regions) panels['region-'+region.id] = () => renderRegionPanel(region);
+for(const region of regions) panels['region-'+region.id] = options => renderRegionPanel(region, options);
 
 function closeMenu() {
   navigation.classList.remove('is-open');
@@ -84,7 +87,42 @@ menuToggle.addEventListener('click', () => {
   if(open) $('a',navigation).focus();
 });
 
-function showPanel(name, updateHistory = true, category = 'personajes') {
+function showRegionEntry(region, failed = false) {
+  if (!dialog.open) {
+    const trigger = document.activeElement;
+    returnFocus = navigation.contains(trigger) && menuToggle.getClientRects().length ? menuToggle : trigger;
+  }
+  closeMenu(); atlas?.leaveRegion();
+  $$('video', dialogBody).forEach(video => video.pause());
+  currentPanel = '';
+  dialog.classList.remove('is-region');
+  dialog.setAttribute('aria-busy', String(!failed));
+  $('.dialog-close').innerHTML = icon('close');
+  $('.dialog-close').setAttribute('aria-label', 'Volver al mapa');
+  dialogBody.innerHTML = heading('El atlas de Archilium', region.name) + (failed
+    ? '<p class="panel-copy" role="alert">No se pudo cargar el paisaje. Puedes volver a intentarlo.</p><button class="ornate-button" data-region-entry-retry>Reintentar</button>'
+    : '<p class="panel-copy" role="status">Preparando tu visita…</p>');
+  $('.dialog-scroll').scrollTop = 0;
+  if (!dialog.open) dialog.showModal();
+  motion.setModalOpen(true);
+  $('.dialog-close').focus();
+}
+
+function showPanel(name, updateHistory = true, category = 'personajes', sceneId) {
+  if (!panels[name]) return;
+  regionEntry.cancel(); pendingRegion = null;
+  const region = name.startsWith('region-') ? getRegion(name.slice(7)) : null;
+  const prepared = region && regionEntry.ready(region, sceneId);
+  if (!region || prepared) { renderPanel(name, updateHistory, category, prepared); return; }
+  pendingRegion = { name, updateHistory, category, sceneId };
+  showRegionEntry(region);
+  void regionEntry.open(region, sceneId, ready => {
+    pendingRegion = null;
+    renderPanel(name, updateHistory, category, ready);
+  }, () => showRegionEntry(region, true));
+}
+
+function renderPanel(name, updateHistory = true, category = 'personajes', prepared = null) {
   if(!panels[name]) return;
   if(!dialog.open) {
     const trigger = document.activeElement;
@@ -99,7 +137,9 @@ function showPanel(name, updateHistory = true, category = 'personajes') {
   $('.dialog-close').setAttribute('aria-label', region ? 'Volver al mapa' : 'Cerrar ventana');
   $$('video', dialogBody).forEach(video => video.pause());
   compendiumCategory = Object.hasOwn(compendium,category) ? category : 'personajes';
-  dialogBody.innerHTML = panels[name]();
+  dialogBody.innerHTML = panels[name](prepared ? { sceneId: prepared.scene.id, prepared: true } : undefined);
+  if (prepared) mountEntryImage($('.region-experience'), prepared);
+  dialog.setAttribute('aria-busy', 'false');
   $('.dialog-scroll').scrollTop = 0;
   if(name === 'compendio') renderCompendium();
   if(name === 'audio') player.refreshUI();
@@ -111,25 +151,35 @@ function showPanel(name, updateHistory = true, category = 'personajes') {
 }
 
 function closePanel(clearHash = true) {
+  const wasRegion = dialog.classList.contains('is-region') || Boolean(pendingRegion);
+  regionEntry.cancel(); pendingRegion = null;
   if(!dialog.open) return;
   $$('video', dialogBody).forEach(video => video.pause());
   const gif = $('#corona-motion');
   if(gif) gif.src = 'assets/archilium-corona-dorada.png';
-  const wasRegion = dialog.classList.contains('is-region');
   atlas?.leaveRegion();
   player.selectTrack();
   dialog.close();
   dialog.classList.remove('is-region');
   motion.setModalOpen(false);
   currentPanel = '';
-  if(clearHash && panels[location.hash.slice(1)]) history.replaceState({},'',location.pathname+location.search+(wasRegion?'#mapa':''));
+  if(clearHash && (panels[location.hash.slice(1)] || wasRegion)) history.replaceState({},'',location.pathname+location.search+(wasRegion?'#mapa':''));
   if(wasRegion) $('#mapa').scrollIntoView({block:'center',behavior:'instant'});
   if(returnFocus instanceof HTMLElement && document.contains(returnFocus)) returnFocus.focus({preventScroll:true});
 }
 
+function warmRegionIntent(event) {
+  const trigger = event.target.closest('[data-region-id],[data-atlas-enter],[data-panel^="region-"]');
+  if (!trigger) return;
+  const region = getRegion(trigger.dataset.regionId || trigger.dataset.atlasEnter || trigger.dataset.panel.slice(7));
+  if (region) regionEntry.warm(region, trigger.dataset.mapScene);
+}
+for (const type of ['pointerover', 'pointerdown', 'focusin']) document.addEventListener(type, warmRegionIntent, { passive: true });
+
 document.addEventListener('click', event => {
   const regionLink = event.target.closest('[data-region-id],[data-atlas-enter]');
-  if(regionLink) { event.preventDefault(); showPanel('region-'+(regionLink.dataset.regionId || regionLink.dataset.atlasEnter)); if (regionLink.dataset.mapScene) atlas?.selectScene(regionLink.dataset.mapScene); return; }
+  if(regionLink) { event.preventDefault(); showPanel('region-'+(regionLink.dataset.regionId || regionLink.dataset.atlasEnter), true, 'personajes', regionLink.dataset.mapScene); return; }
+  if (event.target.closest('[data-region-entry-retry]') && pendingRegion) { const { name, updateHistory, category, sceneId } = pendingRegion; showPanel(name, updateHistory, category, sceneId); return; }
   const panelLink = event.target.closest('[data-panel]');
   if(panelLink) { event.preventDefault(); showPanel(panelLink.dataset.panel,true,panelLink.dataset.openCategory || 'personajes'); return; }
   if(event.target.closest('[data-close-dialog],.dialog-close')) { event.preventDefault(); closePanel(); return; }
