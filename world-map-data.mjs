@@ -2,8 +2,71 @@
 // Las biografías regionales pendientes no se completan por inferencia.
 export const mapArtwork = 'assets/archilium-mapa-reino-furgan.png';
 export const mapLandmarks = [{"id":"valkir","name":"Ruinas de Valkir","regionId":"velan","sceneId":"valkir","x":590,"y":170,"width":145,"height":74.23801369863014,"art":{"src":"assets/valkir-mapa-vineta.png","width":1752,"height":897}}];
+export const factionStandards = {
+  "bocus": {
+    "src": "assets/estandarte-bocus-web.png",
+    "width": 256,
+    "height": 384,
+    "label": "Estandarte de Bocus",
+    "map": {
+      "x": 490,
+      "y": 286
+    }
+  },
+  "velan": {
+    "src": "assets/estandarte-velan-web.png",
+    "width": 256,
+    "height": 384,
+    "label": "Estandarte de Velan",
+    "map": {
+      "x": 1090,
+      "y": 160
+    }
+  },
+  "umen": {
+    "src": "assets/estandarte-umen-web.png",
+    "width": 256,
+    "height": 384,
+    "label": "Estandarte de Umen",
+    "map": {
+      "x": 1000,
+      "y": 360
+    }
+  },
+  "argor": {
+    "src": "assets/estandarte-argor-web.png",
+    "width": 256,
+    "height": 384,
+    "label": "Estandarte de Argor",
+    "map": {
+      "x": 1105,
+      "y": 692
+    }
+  },
+  "lunia": {
+    "src": "assets/estandarte-lunia-web.png",
+    "width": 256,
+    "height": 384,
+    "label": "Estandarte de Lunia",
+    "map": {
+      "x": 1535,
+      "y": 245
+    }
+  },
+  "furgan": {
+    "src": "assets/estandarte-furgan-web.png",
+    "width": 256,
+    "height": 384,
+    "label": "Estandarte de Furgan",
+    "map": {
+      "x": 1430,
+      "y": 784
+    }
+  }
+};
 export const regions = [
   {
+    standard: factionStandards.bocus,
     id: 'bocus', name: 'Laderas de Bocus', shortName: 'Bocus',
     motto: 'Forja · Tradición · Fortaleza', theme: 'embers', color: '#f4a36b',
     heading: 'Donde el fuego\ntoma forma.',
@@ -25,6 +88,7 @@ export const regions = [
     residents: [], residentsNote: 'Un minero, un herrero y un mago dan rostro a esta presentación de Bocus. Sus nombres, vínculos e historias están en desarrollo.'
   },
   {
+    standard: factionStandards.velan,
     id: 'velan', name: 'Ladera Velan', shortName: 'Velan',
     motto: 'Honor · Corona · Unidad', theme: 'snow', color: '#c0d8ee',
     heading: 'Bajo el estandarte\nde la corona.',
@@ -45,6 +109,7 @@ export const regions = [
     residents: [], residentsNote: 'La facción de Velan reúne estas tres figuras en su presentación. Sus nombres, vínculos e historias están en desarrollo.'
   },
   {
+    standard: factionStandards.umen,
     id: 'umen', name: 'Llanura Umen', shortName: 'Umen',
     motto: 'Comercio · Encuentro · Prosperidad', theme: 'pollen', color: '#e6c56f',
     heading: 'Caminos que\nse encuentran.',
@@ -67,6 +132,7 @@ export const regions = [
     residents: [], residentsNote: 'Los mercantiles de Argentia dan rostro al comercio de esta presentación. Sus nombres, vínculos e historias están en desarrollo.'
   },
   {
+    standard: factionStandards.argor,
     id: 'argor', name: 'Península de Argor', shortName: 'Argor',
     motto: 'Tierra · Vida · Hogar', theme: 'leaves', color: '#b8c782',
     heading: 'Toda historia\nempieza en casa.',
@@ -93,6 +159,7 @@ export const regions = [
     residentsNote: 'Conoce a Kalys y a su familia en las fichas del compendio. Las historias del resto de la península están en desarrollo.'
   },
   {
+    standard: factionStandards.lunia,
     id: 'lunia', name: 'Valle Lunia', shortName: 'Lunia',
     motto: 'Magia · Sabiduría · Armonía', theme: 'arcane', color: '#c6a2f3',
     heading: 'Sigue el curso\nde lo extraordinario.',
@@ -114,6 +181,7 @@ export const regions = [
     residents: [], residentsNote: 'Las figuras de Lunia dan rostro a esta presentación de la Academia. Sus nombres, vínculos e historias están en desarrollo.'
   },
   {
+    standard: factionStandards.furgan,
     id: 'furgan', name: 'Pantano Furgan', shortName: 'Furgan',
     motto: 'Territorio Uku', theme: 'fireflies', color: '#b1cf87',
     heading: 'Al ritmo\ndel pantano.',

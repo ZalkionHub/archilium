@@ -242,3 +242,22 @@
 .region-experience[data-entry-prepared=true][data-art-ready=true] .region-landscape:not(.region-slide){opacity:1;animation:region-scene-enter 1.35s ease-out both}
 @keyframes region-scene-enter{from{opacity:1;transform:scale(1.065)}to{opacity:1;transform:scale(1)}}
 .region-experience[data-art-static=true][data-entry-prepared=true] .region-slideshow-stage{animation:none;opacity:1;transform:none}
+
+/* Los estandartes comparten su PNG ligero entre el mapa y la cabecera regional. */
+.atlas-standard{position:absolute;z-index:2;display:grid;place-items:center;width:clamp(18px,4.2%,70px);min-width:44px;min-height:44px;transform:translate(-50%,-50%);outline-offset:3px;text-decoration:none}
+.atlas-standard-art{display:block;width:100%;height:auto;filter:drop-shadow(0 2px 4px #000b);transition:transform .2s;pointer-events:none}
+.atlas-standard:hover .atlas-standard-art,.atlas-standard:focus-visible .atlas-standard-art{transform:translateY(-3px) scale(1.06)}
+.atlas-standard:focus-visible{outline:2px solid #fff0cb}
+.atlas-standard-thumb{width:28px;height:42px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 2px 2px #0008)}
+.region-standard{display:block;width:clamp(80px,7vw,120px);height:auto;max-width:100%;margin:0 auto 14px;filter:drop-shadow(0 5px 8px #0008)}
+.dialog-standard{display:none}
+@media(min-width:701px) and (max-width:1199px){.region-standard{display:inline-block;width:42px;height:63px;margin:0 12px 0 0;vertical-align:middle}}
+@media(min-width:1200px) and (max-height:800px){.region-standard{width:68px;margin-bottom:10px}}
+@media(max-width:700px){
+  .atlas-standard{width:44px;height:44px}
+  .atlas-standard-art{width:20px;height:30px;object-fit:contain}
+  .atlas-standard-thumb{width:22px;height:33px}
+  .region-standard{display:none}
+  #content-dialog.is-region .dialog-standard{display:block;position:absolute;top:8px;left:50%;transform:translateX(-50%);width:34px;height:51px;object-fit:contain;pointer-events:none;filter:drop-shadow(0 2px 4px #0008)}
+}
+@media(prefers-reduced-motion:reduce){.atlas-standard-art{transition:none}.atlas-standard:hover .atlas-standard-art,.atlas-standard:focus-visible .atlas-standard-art{transform:none}}

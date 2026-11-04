@@ -1,9 +1,9 @@
-import { RegionEntry, mountEntryImage } from './region-entry.mjs?v=20261104-landscape-entry';
+import { RegionEntry, mountEntryImage } from './region-entry.mjs?v=20261104-faction-standards';
 import { characters, races, creatures, compendium } from './lore-data.mjs';
 import { initAudioPlayer } from './audio-player.mjs?v=20261103-map';
 import { initCinematicMotion } from './cinematic-motion.mjs';
-import { regions, getRegion } from './world-map-data.mjs?v=20261104-landscape-entry';
-import { initWorldMap, renderRegionPanel } from './world-map.mjs?v=20261104-landscape-entry';
+import { regions, getRegion } from './world-map-data.mjs?v=20261104-faction-standards';
+import { initWorldMap, renderRegionPanel } from './world-map.mjs?v=20261104-faction-standards';
 
 const $ = (selector, parent = document) => parent.querySelector(selector);
 const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
@@ -66,7 +66,7 @@ const panels = {
   creadores: () => `${heading('Comparte el comienzo','Recursos para creadores','Un punto de partida para vídeos, directos y publicaciones sobre Archilium.')}<p class="panel-copy">Un RPG de acción 2D en pixel art, con Kalys como protagonista fijo. El juego está en desarrollo para PC y aún no tiene fecha de lanzamiento anunciada.</p><div class="creator-list"><div><h3>Identidad del juego</h3><p>Logotipo sobre fondo transparente y presentación animada de la corona.</p></div><div><h3>Imágenes del reino</h3><p>Portada ilustrada, estudio conceptual en pixel art y una captura real del prototipo de Kelus.</p></div><div><h3>Información para tu contenido</h3><p>Descripción, formato del juego y estado actual del proyecto.</p></div><div><h3>Al compartir</h3><p>Acredita el nombre del juego. Distingue arte conceptual y material del prototipo.</p></div></div>${download('assets/archilium-creadores.zip','Descargar recursos para creadores')}${motionDownloads()}${motionAssets.projectUrl ? `<div class="motion-links"><a href="${motionAssets.projectUrl}" target="_blank" rel="noopener">Proyecto editable en Jitter ${icon('arrow')}</a></div>` : ''}<p class="panel-caption">Las animaciones presentan el arte y la identidad de la web. La demo pública y el tráiler oficial siguen pendientes.</p>`,
   plataformas: () => `${heading('La aventura está en camino','Nos vemos en el reino.')}<div class="platform-panel">${icon('steam')}<div><h3>PC · Steam</h3><p>En desarrollo. Fecha de lanzamiento por anunciar.</p></div></div><p class="panel-copy">La primera etapa de Archilium será una aventura single player. Los enlaces de la tienda y las especificaciones estarán disponibles cuando se anuncien.</p><button class="ornate-button" data-panel="preguntas">Consultar preguntas frecuentes${icon('arrow')}</button>`,
   galeria: () => `${heading('Una ventana al mundo','Arte de Archilium','Ilustraciones conceptuales de presentación y dirección visual.')}<img class="gallery-image" id="gallery-image" src="assets/archilium-pixel-concept-grounded.png" alt="Escena conceptual de Archilium en pixel art"><div class="gallery-toggle" aria-label="Seleccionar imagen"><button data-gallery="pixel" aria-pressed="true">Estudio en pixel art</button><button data-gallery="hero" aria-pressed="false">Portada ilustrada</button></div>${download('assets/archilium-pixel-concept-grounded.png','Descargar estudio visual')}${download('assets/archilium-hero-grounded.png','Descargar portada')}`,
-  creditos: () => `${heading('Detrás de esta ventana','Créditos de la web')}<div class="credits-list"><p><strong>Archilium: El Reino Sucumbido</strong><br>Universo y dirección del proyecto: Zalkion.</p><p>Ilustraciones conceptuales originales generadas con ImageGen para esta presentación. No representan capturas del videojuego ni diseños definitivos de sus personajes. La captura de Kelus procede del prototipo real y se identifica por separado. El retrato de Kalys campesino es una nueva ilustración conceptual original generada para esta web.</p><p>Logotipo de corona dorada y mapa ilustrado del Reino de Archilium aportados por el propietario. Animaciones de la ciudadela y de la corona creadas en Jitter con esos recursos originales. El atlas presenta el mapa actualizado, incluido Pantano Furgan. Los paisajes regionales y la viñeta de Valkir son conceptos originales generados con ImageGen. Las ilustraciones de habitantes actualmente mostradas fueron aportadas por el propietario.</p><p>Música de la web: «Regal Welcome», «Forge of Chiron», «Llanura Umen», «Canción de Lunia» y «Ladera Velan», pistas aportadas por el propietario. Bocus, Velan, Umen y Lunia cuentan con sus respectivas pistas regionales. El paquete para creadores conserva el boceto original «Bruma de Archilium».</p><p>Tipografías: Cinzel y Barlow Condensed, distribuidas bajo licencia SIL Open Font License.<br><a href="assets/cinzel-OFL.txt">Licencia Cinzel</a> · <a href="assets/barlow-condensed-OFL.txt">Licencia Barlow Condensed</a></p><p>Razas y criaturas: conceptos en desarrollo. Las fichas ampliadas de personajes incluyen retratos narrativos sujetos a revisión. Las historias de los habitantes de las regiones están en desarrollo.</p><p>La web no utiliza cookies de seguimiento ni formularios de recogida de datos.</p></div>`
+  creditos: () => `${heading('Detrás de esta ventana','Créditos de la web')}<div class="credits-list"><p><strong>Archilium: El Reino Sucumbido</strong><br>Universo y dirección del proyecto: Zalkion.</p><p>Ilustraciones conceptuales originales generadas con ImageGen para esta presentación. No representan capturas del videojuego ni diseños definitivos de sus personajes. La captura de Kelus procede del prototipo real y se identifica por separado. El retrato de Kalys campesino es una nueva ilustración conceptual original generada para esta web.</p><p>Logotipo de corona dorada y mapa ilustrado del Reino de Archilium aportados por el propietario. Animaciones de la ciudadela y de la corona creadas en Jitter con esos recursos originales. El atlas presenta el mapa actualizado, incluido Pantano Furgan. Los paisajes regionales, los estandartes de las facciones y la viñeta de Valkir son conceptos originales generados con ImageGen. Las ilustraciones de habitantes actualmente mostradas fueron aportadas por el propietario.</p><p>Música de la web: «Regal Welcome», «Forge of Chiron», «Llanura Umen», «Canción de Lunia» y «Ladera Velan», pistas aportadas por el propietario. Bocus, Velan, Umen y Lunia cuentan con sus respectivas pistas regionales. El paquete para creadores conserva el boceto original «Bruma de Archilium».</p><p>Tipografías: Cinzel y Barlow Condensed, distribuidas bajo licencia SIL Open Font License.<br><a href="assets/cinzel-OFL.txt">Licencia Cinzel</a> · <a href="assets/barlow-condensed-OFL.txt">Licencia Barlow Condensed</a></p><p>Razas y criaturas: conceptos en desarrollo. Las fichas ampliadas de personajes incluyen retratos narrativos sujetos a revisión. Las historias de los habitantes de las regiones están en desarrollo.</p><p>La web no utiliza cookies de seguimiento ni formularios de recogida de datos.</p></div>`
 };
 
 for(const [category,entries] of [['personajes',characters],['razas',races],['criaturas',creatures]]){
@@ -87,6 +87,16 @@ menuToggle.addEventListener('click', () => {
   if(open) $('a',navigation).focus();
 });
 
+function setDialogStandard(region) {
+  $('.dialog-standard', dialog)?.remove();
+  if (!region?.standard) return;
+  const image = document.createElement('img');
+  image.className = 'dialog-standard'; image.alt = ''; image.src = region.standard.src;
+  image.width = region.standard.width; image.height = region.standard.height;
+  image.loading = 'lazy'; image.decoding = 'async'; image.dataset.factionStandard = region.id;
+  $('.dialog-topline', dialog).append(image);
+}
+
 function showRegionEntry(region, failed = false) {
   if (!dialog.open) {
     const trigger = document.activeElement;
@@ -96,6 +106,7 @@ function showRegionEntry(region, failed = false) {
   $$('video', dialogBody).forEach(video => video.pause());
   currentPanel = '';
   dialog.classList.remove('is-region');
+  setDialogStandard(null);
   dialog.setAttribute('aria-busy', String(!failed));
   $('.dialog-close').innerHTML = icon('close');
   $('.dialog-close').setAttribute('aria-label', 'Volver al mapa');
@@ -133,6 +144,7 @@ function renderPanel(name, updateHistory = true, category = 'personajes', prepar
   atlas?.leaveRegion();
   const region = name.startsWith('region-') ? getRegion(name.slice(7)) : null;
   dialog.classList.toggle('is-region', Boolean(region));
+  setDialogStandard(region);
   $('.dialog-close').innerHTML = region ? `Volver al mapa ${icon('close')}` : icon('close');
   $('.dialog-close').setAttribute('aria-label', region ? 'Volver al mapa' : 'Cerrar ventana');
   $$('video', dialogBody).forEach(video => video.pause());
@@ -154,6 +166,7 @@ function closePanel(clearHash = true) {
   const wasRegion = dialog.classList.contains('is-region') || Boolean(pendingRegion);
   regionEntry.cancel(); pendingRegion = null;
   if(!dialog.open) return;
+  setDialogStandard(null);
   $$('video', dialogBody).forEach(video => video.pause());
   const gif = $('#corona-motion');
   if(gif) gif.src = 'assets/archilium-corona-dorada.png';

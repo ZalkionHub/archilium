@@ -1,7 +1,7 @@
-import { regions, mapArtwork, mapLandmarks, getRegion } from './world-map-data.mjs?v=20261104-landscape-entry';
-import { RegionEffects } from './world-map-effects.mjs?v=20261104-landscape-entry';
+import { regions, mapArtwork, mapLandmarks, getRegion } from './world-map-data.mjs?v=20261104-faction-standards';
+import { RegionEffects } from './world-map-effects.mjs?v=20261104-faction-standards';
 import { watchRegionArtwork } from './region-artwork.mjs?v=20261103-bocus-scene';
-import { RegionSlideshow } from './region-slideshow.mjs?v=20261104-landscape-entry';
+import { RegionSlideshow } from './region-slideshow.mjs?v=20261104-faction-standards';
 
 const icon = name => `<svg aria-hidden="true"><use href="#icon-${name}"/></svg>`;
 const safe = text => String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -13,15 +13,27 @@ export function renderAtlas() {
     <header class="atlas-heading"><div><p class="eyebrow">El atlas de Archilium</p><h2 id="atlas-title">Regiones y territorios.<br><em>Un mismo reino.</em></h2></div><div class="atlas-intro"><p>De las forjas de Bocus al pantano de Furgan.<br>Cada horizonte tiene algo que contar.</p><p class="atlas-instruction">Señala una región para descubrirla. Pulsa para adentrarte.</p></div>${compass}</header>
     <div class="atlas-frame">
       <div class="atlas-stage"><img class="atlas-map" src="${mapArtwork}" alt="Mapa ilustrado del Reino de Archilium: Bocus al oeste, Velan al norte, Umen en el centro, Argor al sur, Lunia al noreste y Pantano Furgan al sureste" width="1672" height="941" loading="lazy">
-        <svg class="atlas-overlays" viewBox="0 0 1672 941" aria-label="Regiones del mapa interactivo">${regions.map(region => `<a href="#region-${region.id}" role="button" tabindex="0" class="atlas-region" data-region-id="${region.id}" aria-label="Explorar ${safe(region.name)}" style="--region-color:${region.color}"><path d="${region.shape}"/></a>`).join('')}</svg>${renderMapLandmarks()}
+        <svg class="atlas-overlays" viewBox="0 0 1672 941" aria-label="Regiones del mapa interactivo">${regions.map(region => `<a href="#region-${region.id}" role="button" tabindex="0" class="atlas-region" data-region-id="${region.id}" aria-label="Explorar ${safe(region.name)}" style="--region-color:${region.color}"><path d="${region.shape}"/></a>`).join('')}</svg>${renderMapLandmarks()}${renderMapStandards()}
         <div class="atlas-hover-card" hidden aria-hidden="true"><span>Descubre la región</span><strong data-hover-name></strong><p data-hover-motto></p><p data-hover-summary></p><small>Pulsa para adentrarte ${icon('arrow')}</small></div>
         <span class="atlas-art-label">Mapa ilustrado · Mundo en desarrollo</span>
       </div>
       <div class="atlas-preview" id="atlas-preview" style="--region-color:${first.color}"><div class="atlas-preview-heading"><span class="atlas-preview-kicker">Tu próximo destino</span><h3 data-atlas-name>${first.name}</h3><p data-atlas-motto>${first.motto}</p></div><p class="atlas-preview-summary" data-atlas-summary>${first.summary}</p><button class="atlas-enter" data-atlas-enter="${first.id}">Adentrarse ${icon('arrow')}</button></div>
     </div>
-    <nav class="atlas-destinations" aria-label="Elegir una región de Archilium">${regions.map(region => `<button data-region-id="${region.id}" data-previewed="${region === first}" style="--region-color:${region.color}"><span></span>${region.name}${icon('arrow')}</button>`).join('')}</nav>
+    <nav class="atlas-destinations" aria-label="Elegir una región de Archilium">${regions.map(region => `<button data-region-id="${region.id}" data-previewed="${region === first}" style="--region-color:${region.color}">${standardImage(region, 'atlas-standard-thumb')}${region.name}${icon('arrow')}</button>`).join('')}</nav>
     <p class="atlas-footnote">Explora una interpretación animada del mapa. Lugares, habitantes e historias se amplían a medida que crece Archilium.</p>
   </section>`;
+}
+
+function standardImage(region, className) {
+  const standard = region.standard;
+  return standard ? `<img class="${className}" src="${standard.src}" width="${standard.width}" height="${standard.height}" alt="" loading="lazy" decoding="async" data-faction-standard="${region.id}">` : '';
+}
+
+function renderMapStandards() {
+  return regions.filter(region => region.standard).map(region => {
+    const { x, y } = region.standard.map;
+    return `<a class="atlas-standard" href="#region-${region.id}" role="button" tabindex="0" data-region-id="${region.id}" data-map-standard="${region.id}" aria-label="Explorar ${safe(region.name)} mediante su estandarte" title="${safe(region.standard.label)}" style="left:${x / 1672 * 100}%;top:${y / 941 * 100}%">${standardImage(region, 'atlas-standard-art')}</a>`;
+  }).join('');
 }
 
 function renderMapLandmarks() {
@@ -41,7 +53,7 @@ export function renderRegionPanel(region, { sceneId, prepared = false } = {}) {
   return `<article class="region-experience ${region.inhabitantsArt ? 'has-inhabitants-art' : ''}" data-region="${region.id}" data-effects-paused="false" data-initial-slide="${initialIndex}" data-entry-prepared="${prepared}" data-art-ready="${prepared}" data-people-ready="false" style="--region-color:${region.color};--camera-x:${tx}px;--camera-y:${ty}px;--camera-scale:${scale}">
     <div class="region-scenery" aria-hidden="true">${mapFallback}${scenery}<div class="region-color-wash region-wash-${region.theme}"></div></div>
     <div class="region-shade" aria-hidden="true"></div><canvas class="region-weather" aria-hidden="true"></canvas>
-    <div class="region-content"><div class="region-title-block"><p class="eyebrow">El atlas de Archilium</p><p class="region-motto">${safe(region.motto)}</p><h2 id="dialog-title">${safe(region.name)}</h2><p class="region-invitation">${safe(region.heading).replace('\n',region.inhabitantsArt?' ':'<br>')}</p>${region.inhabitantsArt ? `<figure class="region-inhabitants-art"><img src="${region.inhabitantsArt.src}" alt="${safe(region.inhabitantsArt.alt)}" width="${region.inhabitantsArt.width}" height="${region.inhabitantsArt.height}" decoding="async"><figcaption>${safe(region.inhabitantsArt.caption || 'Habitantes · Conceptos visuales')}</figcaption></figure>` : ''}<span class="region-visual-note">${region.landscape ? 'Paisaje conceptual · Historias en desarrollo' : 'Una mirada animada al mapa · En desarrollo'}</span></div>
+    <div class="region-content"><div class="region-title-block"><p class="eyebrow">El atlas de Archilium</p><p class="region-motto">${safe(region.motto)}</p><h2 id="dialog-title">${standardImage(region, 'region-standard')}${safe(region.name)}</h2><p class="region-invitation">${safe(region.heading).replace('\n',region.inhabitantsArt?' ':'<br>')}</p>${region.inhabitantsArt ? `<figure class="region-inhabitants-art"><img src="${region.inhabitantsArt.src}" alt="${safe(region.inhabitantsArt.alt)}" width="${region.inhabitantsArt.width}" height="${region.inhabitantsArt.height}" decoding="async"><figcaption>${safe(region.inhabitantsArt.caption || 'Habitantes · Conceptos visuales')}</figcaption></figure>` : ''}<span class="region-visual-note">${region.landscape ? 'Paisaje conceptual · Historias en desarrollo' : 'Una mirada animada al mapa · En desarrollo'}</span></div>
     <div class="region-story">${slideshowControls}<p class="region-summary">${safe(region.summary)}</p><div class="region-tabs" role="tablist" aria-label="Descubrir ${safe(region.name)}"><button role="tab" id="region-tab-places" aria-controls="region-tab-content" aria-selected="true" tabindex="0" data-region-tab="places">Lugares</button><button role="tab" id="region-tab-life" aria-controls="region-tab-content" aria-selected="false" tabindex="-1" data-region-tab="life">Vida y oficios</button><button role="tab" id="region-tab-people" aria-controls="region-tab-content" aria-selected="false" tabindex="-1" data-region-tab="people">Habitantes</button></div><div class="region-tab-content" id="region-tab-content" role="tabpanel" aria-labelledby="region-tab-places" tabindex="0">${renderRegionTab(region, 'places')}</div></div></div>
     <div class="region-bottom"><div class="region-listening"><button class="audio-panel-toggle region-audio-toggle" aria-label="Reproducir música" aria-pressed="false">${icon('play')}</button><div><span>${region.music ? `La música de ${safe(region.shortName)}` : 'Ambiente del reino'}</span><strong>${region.music?.name || 'Regal Welcome'}</strong><small data-region-audio-state>Preparando música…</small></div><button class="region-mute-toggle" data-audio-mute aria-label="Silenciar música" aria-pressed="false">${icon('volume')}</button><label class="region-volume"><span class="sr-only">Volumen de la música regional</span><input type="range" min="0" max="1" step="0.01" value="0.35" data-audio-volume aria-label="Volumen de la música regional"></label></div><button class="region-effects-toggle" data-region-effects aria-pressed="false">${icon('pause')}<span>Pausar efectos</span></button></div>
     <nav class="region-switcher" aria-label="Viajar a otra región">${regions.map(item => `<button data-panel="region-${item.id}" ${item.id === region.id ? 'aria-current="page"' : ''}><span style="background:${item.color}"></span>${item.shortName}</button>`).join('')}</nav>
