@@ -1,7 +1,7 @@
-import { regions, mapArtwork, getRegion } from './world-map-data.mjs?v=20261104-furgan-trio';
-import { RegionEffects } from './world-map-effects.mjs?v=20261104-furgan-trio';
+import { regions, mapArtwork, mapLandmarks, getRegion } from './world-map-data.mjs?v=20261104-regional-scenes';
+import { RegionEffects } from './world-map-effects.mjs?v=20261104-regional-scenes';
 import { watchRegionArtwork } from './region-artwork.mjs?v=20261103-bocus-scene';
-import { RegionSlideshow } from './region-slideshow.mjs?v=20261104-furgan-trio';
+import { RegionSlideshow } from './region-slideshow.mjs?v=20261104-regional-scenes';
 
 const icon = name => `<svg aria-hidden="true"><use href="#icon-${name}"/></svg>`;
 const safe = text => String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -13,7 +13,7 @@ export function renderAtlas() {
     <header class="atlas-heading"><div><p class="eyebrow">El atlas de Archilium</p><h2 id="atlas-title">Regiones y territorios.<br><em>Un mismo reino.</em></h2></div><div class="atlas-intro"><p>De las forjas de Bocus al pantano de Furgan.<br>Cada horizonte tiene algo que contar.</p><p class="atlas-instruction">Señala una región para descubrirla. Pulsa para adentrarte.</p></div>${compass}</header>
     <div class="atlas-frame">
       <div class="atlas-stage"><img class="atlas-map" src="${mapArtwork}" alt="Mapa ilustrado del Reino de Archilium: Bocus al oeste, Velan al norte, Umen en el centro, Argor al sur, Lunia al noreste y Pantano Furgan al sureste" width="1672" height="941" loading="lazy">
-        <svg class="atlas-overlays" viewBox="0 0 1672 941" aria-label="Regiones del mapa interactivo">${regions.map(region => `<a href="#region-${region.id}" role="button" tabindex="0" class="atlas-region" data-region-id="${region.id}" aria-label="Explorar ${safe(region.name)}" style="--region-color:${region.color}"><path d="${region.shape}"/></a>`).join('')}</svg>
+        <svg class="atlas-overlays" viewBox="0 0 1672 941" aria-label="Regiones del mapa interactivo">${regions.map(region => `<a href="#region-${region.id}" role="button" tabindex="0" class="atlas-region" data-region-id="${region.id}" aria-label="Explorar ${safe(region.name)}" style="--region-color:${region.color}"><path d="${region.shape}"/></a>`).join('')}</svg>${renderMapLandmarks()}
         <div class="atlas-hover-card" hidden aria-hidden="true"><span>Descubre la región</span><strong data-hover-name></strong><p data-hover-motto></p><p data-hover-summary></p><small>Pulsa para adentrarte ${icon('arrow')}</small></div>
         <span class="atlas-art-label">Mapa ilustrado · Mundo en desarrollo</span>
       </div>
@@ -24,14 +24,18 @@ export function renderAtlas() {
   </section>`;
 }
 
+function renderMapLandmarks() {
+  return mapLandmarks.map(place => `<a class="atlas-landmark" href="#region-${place.regionId}" role="button" tabindex="0" data-region-id="${place.regionId}" data-map-scene="${place.sceneId}" aria-label="Explorar ${safe(place.name)} y su lago" style="left:${place.x / 1672 * 100}%;top:${place.y / 941 * 100}%;width:${place.width / 1672 * 100}%"><img src="${place.art.src}" width="${place.art.width}" height="${place.art.height}" alt="" loading="lazy"><span>${safe(place.name)}</span></a>`).join('');
+}
+
 export function renderRegionPanel(region) {
   const { x, y, scale } = region.camera;
   // Clamp the camera to the artwork so that mobile/ultrawide never reveals blank edges.
   const tx = Math.min(0, Math.max(1672 * (1 - scale), 836 - x * scale));
   const ty = Math.min(0, Math.max(941 * (1 - scale), 470.5 - y * scale));
   const slides = region.landscapeSlides?.length ? [region.landscape, ...region.landscapeSlides] : null;
-  const scenery = slides ? `<div class="region-slideshow-stage">${slides.map((slide, index) => `<img class="${index === 0 ? 'region-landscape ' : ''}region-slide${index === 0 ? ' is-current' : ''}" ${index === 0 ? 'src' : 'data-src'}="${slide.src}" data-slide-label="${safe(slide.label)}" alt="" width="${slide.width}" height="${slide.height}" decoding="async" ${index === 0 ? 'fetchpriority="high"' : ''} style="object-position:${slide.position}">`).join('')}</div>` : region.landscape ? `<img class="region-landscape" src="${region.landscape.src}" alt="" width="${region.landscape.width}" height="${region.landscape.height}" decoding="async" fetchpriority="high" style="object-position:${region.landscape.position}">` : '';
-  const slideshowControls = slides ? `<div class="region-slideshow-controls" data-region-slideshow role="group" aria-label="Paisajes de ${safe(region.shortName)}"><div class="region-slide-heading"><div><span data-slide-mode>Recorre ${safe(region.shortName)}</span><strong data-slide-label>${safe(slides[0].label)}</strong></div><button data-slide-toggle aria-pressed="false">${icon('pause')}<span>Pausar pase</span></button></div><div class="region-slide-choices">${slides.map((slide, index) => `<button data-slide-index="${index}" aria-label="Ver ${safe(slide.label)}" aria-pressed="${index === 0}">${safe(slide.label)}</button>`).join('')}</div><span class="sr-only" data-slide-status role="status" aria-live="polite"></span></div>` : '';
+  const scenery = slides ? `<div class="region-slideshow-stage">${slides.map((slide, index) => `<img class="${index === 0 ? 'region-landscape ' : ''}region-slide${index === 0 ? ' is-current' : ''}" ${index === 0 ? 'src' : 'data-src'}="${slide.src}" data-slide-id="${safe(slide.id)}" data-slide-description="${safe(slide.description || '')}" data-slide-label="${safe(slide.label)}" alt="" width="${slide.width}" height="${slide.height}" decoding="async" ${index === 0 ? 'fetchpriority="high"' : ''} style="object-position:${slide.position}">`).join('')}</div>` : region.landscape ? `<img class="region-landscape" src="${region.landscape.src}" alt="" width="${region.landscape.width}" height="${region.landscape.height}" decoding="async" fetchpriority="high" style="object-position:${region.landscape.position}">` : '';
+  const slideshowControls = slides ? `<div class="region-slideshow-controls" data-region-slideshow role="group" aria-label="Paisajes de ${safe(region.shortName)}"><div class="region-slide-heading"><div><span data-slide-mode>Recorre ${safe(region.shortName)}</span><strong data-slide-label>${safe(slides[0].label)}</strong></div><button data-slide-toggle aria-pressed="false">${icon('pause')}<span>Pausar pase</span></button></div><p class="region-slide-description" data-scene-description${slides[0].description ? '' : ' hidden'}>${safe(slides[0].description || '')}</p><div class="region-slide-choices">${slides.map((slide, index) => `<button data-slide-index="${index}" aria-label="Ver ${safe(slide.label)}" aria-pressed="${index === 0}">${safe(slide.label)}</button>`).join('')}</div><span class="sr-only" data-slide-status role="status" aria-live="polite"></span></div>` : '';
   return `<article class="region-experience ${region.inhabitantsArt ? 'has-inhabitants-art' : ''}" data-region="${region.id}" data-effects-paused="false" data-art-ready="false" data-people-ready="false" style="--region-color:${region.color};--camera-x:${tx}px;--camera-y:${ty}px;--camera-scale:${scale}">
     <div class="region-scenery" aria-hidden="true"><svg class="region-panorama" viewBox="0 0 1672 941" preserveAspectRatio="xMidYMid slice"><g class="region-camera"><image href="${mapArtwork}" width="1672" height="941"/></g></svg>${scenery}<div class="region-color-wash region-wash-${region.theme}"></div></div>
     <div class="region-shade" aria-hidden="true"></div><canvas class="region-weather" aria-hidden="true"></canvas>
@@ -56,7 +60,7 @@ export function renderRegionTab(region, tab) {
 }
 
 function renderPlaces(places) {
-  return `<ul class="region-places">${places.map(place => `<li><span class="region-place-mark" aria-hidden="true">◇</span><div><h3>${safe(place.name)}</h3><span>${safe(place.kind)}</span><p>${safe(place.text)}</p></div></li>`).join('')}</ul>`;
+  return `<ul class="region-places">${places.map(place => `<li><span class="region-place-mark" aria-hidden="true">◇</span><div><h3>${place.sceneId ? `<button class="region-place-scene" data-region-scene="${place.sceneId}" aria-label="Ver paisaje: ${safe(place.name)}">${safe(place.name)} ${icon('arrow')}</button>` : safe(place.name)}</h3><span>${safe(place.kind)}</span><p>${safe(place.text)}</p></div></li>`).join('')}</ul>`;
 }
 
 export function initWorldMap(doc, { player, onPreview = () => {} } = {}) {
@@ -86,7 +90,8 @@ export function initWorldMap(doc, { player, onPreview = () => {} } = {}) {
 
   function showHover(element, event) {
     const region = getRegion(element.dataset.regionId);
-    if (!region || !element.classList.contains('atlas-region')) return;
+    if (!region) return;
+    if (!element.classList.contains('atlas-region')) { hoverCard.hidden = true; return; }
     hoverCard.style.setProperty('--region-color', region.color);
     hoverCard.querySelector('[data-hover-name]').textContent = region.name;
     hoverCard.querySelector('[data-hover-motto]').textContent = region.motto;
@@ -146,7 +151,7 @@ export function initWorldMap(doc, { player, onPreview = () => {} } = {}) {
     hoverCard.hidden = true;
     activeRegion = region;
     releaseArtwork = watchRegionArtwork(doc.querySelector('.region-experience'));
-    if (region.landscapeSlides?.length) slideshow = new RegionSlideshow(doc.querySelector('.region-experience'), win);
+    if (region.landscapeSlides?.length && doc.querySelector('.region-experience').querySelector('[data-region-slideshow]')) slideshow = new RegionSlideshow(doc.querySelector('.region-experience'), win);
     previewRegion(region.id);
     effects = new RegionEffects(doc.querySelector('.region-weather'), region.theme, win);
     player.selectTrack(region.music || undefined);
@@ -154,6 +159,8 @@ export function initWorldMap(doc, { player, onPreview = () => {} } = {}) {
   }
 
   doc.addEventListener('click', event => {
+    const sceneButton = event.target.closest('[data-region-scene]');
+    if (sceneButton && activeRegion) { event.preventDefault(); selectScene(sceneButton.dataset.regionScene); }
     const effectsButton = event.target.closest('[data-region-effects]');
     if (effectsButton) { manualPause = !manualPause; syncEffects(); }
     const tab = event.target.closest('[data-region-tab]');
@@ -174,5 +181,6 @@ export function initWorldMap(doc, { player, onPreview = () => {} } = {}) {
   });
   reduced.addEventListener('change', syncEffects);
   doc.addEventListener('visibilitychange', syncEffects);
-  return { enterRegion, leaveRegion, previewRegion };
+  function selectScene(id) { return slideshow?.selectById(id) || false; }
+  return { enterRegion, leaveRegion, previewRegion, selectScene };
 }

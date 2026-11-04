@@ -11,6 +11,7 @@ export class RegionSlideshow {
     this.buttons = [...this.controls.querySelectorAll('[data-slide-index]')];
     this.toggle = this.controls.querySelector('[data-slide-toggle]');
     this.label = this.controls.querySelector('[data-slide-label]');
+    this.description = this.controls.querySelector('[data-scene-description]');
     this.status = this.controls.querySelector('[data-slide-status]');
     this.current = 0;
     this.pending = null;
@@ -100,6 +101,13 @@ export class RegionSlideshow {
     if (image.complete) { if (image.naturalWidth > 0) this.loaded(index); else this.failed(index); }
   }
 
+  selectById(id) {
+    const index = this.images.findIndex(image => image.dataset.slideId === id);
+    if (this.disposed || index < 0 || this.states[index] === 'failed') return false;
+    this.select(index);
+    return true;
+  }
+
   loaded(index) {
     if (this.disposed || this.images[index].naturalWidth === 0) return;
     this.states[index] = 'ready';
@@ -130,6 +138,10 @@ export class RegionSlideshow {
     this.experience.dataset.artReady = 'true';
     this.images.forEach((image, i) => image.classList.toggle('is-current', i === index));
     this.label.textContent = this.images[index].dataset.slideLabel;
+    if (this.description) {
+      this.description.textContent = this.images[index].dataset.slideDescription || '';
+      this.description.hidden = !this.description.textContent;
+    }
     if (manual) this.status.textContent = `Paisaje: ${this.label.textContent}.`;
     this.update();
     this.schedule();

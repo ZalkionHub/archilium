@@ -125,15 +125,15 @@
 .region-slide{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;opacity:0;transform:none;transition:opacity 1.2s ease-in-out}
 .region-slide.is-current{opacity:1}
 .region-experience[data-slideshow-paused=true] .region-slide{transition:none}
-.region-slideshow-controls{margin:0 0 23px;padding:13px 15px 8px;border:1px solid #bea1e344;background:linear-gradient(110deg,#161021d9,#10141dc2);text-shadow:none}
+.region-slideshow-controls{margin:0 0 23px;padding:13px 15px 8px;border:1px solid color-mix(in srgb,var(--region-color) 30%,transparent);background:linear-gradient(110deg,color-mix(in srgb,var(--region-color) 10%,#10141df2),#10141dc2);text-shadow:none}
 .region-slide-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
 .region-slide-heading>div{min-width:0}.region-slide-heading>div>span{display:block;font:700 9px var(--condensed);letter-spacing:.12em;text-transform:uppercase;color:#bdb4cd;margin-bottom:4px}
-.region-slide-heading strong{font:500 18px var(--serif);color:#f0e4ff}
-.region-slide-heading button{display:flex;align-items:center;gap:6px;flex-shrink:0;min-height:36px;padding:6px 8px;border:1px solid #c6a2f344;color:#e0c9fa;background:#100d17;font:700 11px var(--condensed);text-transform:uppercase}
+.region-slide-heading strong{font:500 18px var(--serif);color:#f0e4cb}
+.region-slide-heading button{display:flex;align-items:center;gap:6px;flex-shrink:0;min-height:36px;padding:6px 8px;border:1px solid color-mix(in srgb,var(--region-color) 30%,transparent);color:var(--region-color);background:#100d17;font:700 11px var(--condensed);text-transform:uppercase}
 .region-slide-heading button svg{width:11px;height:11px}
 .region-slide-choices{display:flex;flex-wrap:wrap;gap:3px 13px}
 .region-slide-choices button{min-height:36px;padding:7px 0;border-bottom:2px solid transparent;background:none;color:#c3bdce;font:700 12px var(--condensed)}
-.region-slide-choices button[aria-pressed=true]{color:#f0dfff;border-bottom-color:var(--region-color)}
+.region-slide-choices button[aria-pressed=true]{color:var(--region-color);border-bottom-color:var(--region-color)}
 .region-slide-choices button:disabled{opacity:.45;cursor:default}
 @media(max-width:700px){.region-slideshow-controls{padding:12px;margin-bottom:23px}.region-slide-heading strong{font-size:17px}.region-slide-choices{justify-content:space-between;gap:2px 8px}.region-slide-choices button{font-size:12px}}
 
@@ -156,3 +156,13 @@
   .region-experience[data-region=lunia] .region-shade{background:linear-gradient(90deg,#080d134d 0,#080d131a 30%,#080d138c 60%,#080d13b3 100%),linear-gradient(0deg,#080d13ed 0,transparent 27%,transparent 78%,#080d1366)}
   .region-experience[data-region=lunia] .region-story{text-shadow:0 1px 3px #04080d,0 1px 9px #04080d}
 }
+
+/* Lugares que abren un paisaje concreto y nueva viñeta del atlas. */
+.region-slide-description{margin:0 0 6px;font-size:11px;line-height:1.6;color:#c6c4b9}
+.region-slide-description[hidden]{display:none}
+.region-place-scene{padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--region-color) 40%,transparent);text-underline-offset:4px}
+.region-place-scene svg{display:inline-block;width:13px;height:13px;color:var(--region-color);vertical-align:middle;margin-left:4px}
+.atlas-landmark{position:absolute;z-index:2;display:block;outline-offset:5px;text-decoration:none}
+.atlas-landmark img{display:block;width:100%;height:auto;pointer-events:none}
+.atlas-landmark>span{position:absolute;left:50%;top:100%;transform:translateX(-50%);white-space:nowrap;background:#0b1117ed;border:1px solid #c4a46d;color:#f0e0b8;padding:2px 6px;font:500 clamp(7px,.8vw,12px)/1.3 var(--serif);box-shadow:0 2px 5px #0008}
+.atlas-landmark:hover>span,.atlas-landmark:focus-visible>span{color:#fff3d1;border-color:#fff3d1;background:#222b30}
