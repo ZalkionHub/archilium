@@ -1,7 +1,7 @@
-import { regions, mapArtwork, mapLandmarks, getRegion } from './world-map-data.mjs?v=20261104-faction-standards';
-import { RegionEffects } from './world-map-effects.mjs?v=20261104-faction-standards';
+import { regions, mapArtwork, mapLandmarks, getRegion } from './world-map-data.mjs?v=20261104-lunia-argor-music';
+import { RegionEffects } from './world-map-effects.mjs?v=20261104-lunia-argor-music';
 import { watchRegionArtwork } from './region-artwork.mjs?v=20261103-bocus-scene';
-import { RegionSlideshow } from './region-slideshow.mjs?v=20261104-faction-standards';
+import { RegionSlideshow } from './region-slideshow.mjs?v=20261104-lunia-argor-music';
 
 const icon = name => `<svg aria-hidden="true"><use href="#icon-${name}"/></svg>`;
 const safe = text => String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
