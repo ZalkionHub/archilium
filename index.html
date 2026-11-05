@@ -22,8 +22,10 @@
   <link rel="stylesheet" href="cinematic.css">
   <link rel="stylesheet" href="lore.css">
   <link rel="stylesheet" href="world-map.css?v=20261104-faction-standards">
+  <link rel="stylesheet" href="news.css?v=20261105-news">
   <script src="loading-screen.js"></script>
   <script src="app.js?v=20261104-lunia-argor-music" type="module"></script>
+  <script src="news.mjs?v=20261105-news" type="module"></script>
 </head>
 <body>
   <div class="site-loader" id="site-loader" aria-label="Cargando Archilium" aria-hidden="true">
@@ -53,7 +55,7 @@
     <a class="nav-brand" href="#inicio" aria-label="Archilium, inicio"><img src="assets/archilium-corona-dorada.png" alt="" width="2172" height="724"></a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="main-navigation" aria-label="Abrir menú"><span></span><span></span></button>
     <nav class="main-navigation" id="main-navigation" aria-label="Navegación principal">
-      <a href="#el-juego">El juego</a><a href="#mapa">El mapa</a><a href="#arte-de-fans" data-panel="arte-de-fans">Arte de fans</a><a href="#preguntas" data-panel="preguntas">Preguntas</a><a href="#prensa" data-panel="prensa">Prensa</a><a href="#compendio" data-panel="compendio">Compendio</a><a href="#audio" data-panel="audio">Audio</a><a href="#creadores" data-panel="creadores">Creadores</a>
+      <a href="#el-juego">El juego</a><a href="#novedades">Novedades</a><a href="#mapa">El mapa</a><a href="#arte-de-fans" data-panel="arte-de-fans">Arte de fans</a><a href="#preguntas" data-panel="preguntas">Preguntas</a><a href="#prensa" data-panel="prensa">Prensa</a><a href="#compendio" data-panel="compendio">Compendio</a><a href="#audio" data-panel="audio">Audio</a><a href="#creadores" data-panel="creadores">Creadores</a>
     </nav>
     <button class="header-action" data-panel="presentacion">Ver presentación <svg><use href="#icon-play"/></svg></button>
   </header>
@@ -73,6 +75,15 @@
       <a class="scroll-cue" href="#el-juego" aria-label="Desplazarse para descubrir Archilium"><span></span></a>
     </section>
     <div class="game-ribbon"><span>Una aventura para un jugador</span><span>PC · Steam previsto</span><span>Pixel art · Vista 3/4</span><span>Fecha por anunciar</span></div>
+    <section class="news-section" id="novedades" aria-labelledby="news-title">
+      <div class="news-shell">
+        <header class="news-heading"><div><p class="eyebrow">Diario de desarrollo</p><h2 id="news-title">Novedades del reino</h2></div><p>Los últimos avances, imágenes y noticias de Archilium, en un mismo lugar.</p></header>
+        <div class="news-grid" id="news-grid" aria-busy="true"></div>
+        <div class="news-feedback"><p id="news-status" role="status" aria-live="polite">Cargando novedades…</p><button class="news-action" id="news-retry" type="button" hidden>Reintentar</button></div>
+        <div class="news-more-wrap"><button class="news-action" id="news-more" type="button" hidden>Cargar más noticias</button></div>
+        <noscript><p class="news-noscript">Activa JavaScript para consultar las novedades publicadas de Archilium.</p></noscript>
+      </div>
+    </section>
     <section class="manifesto-section" id="el-juego" aria-labelledby="intro-title">
       <div class="section-rule" aria-hidden="true"></div>
       <p class="eyebrow reveal">Bienvenido a Archilium</p>
@@ -138,7 +149,7 @@
     </section>
     <section class="journey-section" aria-labelledby="journey-title"><img class="journey-crown" src="assets/emblem.svg" alt="" width="90" height="110" loading="lazy"><p class="eyebrow reveal">La aventura está tomando forma</p><h2 id="journey-title" class="reveal">La historia<br><em>solo acaba de empezar.</em></h2><p class="reveal">Archilium: El Reino Sucumbido está en desarrollo para PC.<br>Conoce el proyecto, descubre su universo y acompaña sus primeros pasos.</p><div class="journey-actions reveal"><button class="primary-button" data-panel="preguntas">Conoce el proyecto <svg><use href="#icon-arrow"/></svg></button><button class="secondary-button" data-panel="creadores">Recursos para creadores</button></div><div class="journey-meta"><span>PC · Steam previsto</span><span>Single player</span><span>Fecha por anunciar</span></div></section>
   </main>
-  <footer class="site-footer"><a class="footer-brand" href="#inicio" aria-label="Archilium, inicio"><img src="assets/archilium-corona-dorada.png" alt="" width="2172" height="724" loading="lazy"></a><nav aria-label="Enlaces del pie de página"><a href="#preguntas" data-panel="preguntas">Preguntas frecuentes</a><a href="#prensa" data-panel="prensa">Prensa</a><a href="#creadores" data-panel="creadores">Creadores</a><button data-panel="creditos">Créditos</button></nav><p>© <span id="copyright-year">2026</span> Archilium: El Reino Sucumbido.</p></footer>
+  <footer class="site-footer"><a class="footer-brand" href="#inicio" aria-label="Archilium, inicio"><img src="assets/archilium-corona-dorada.png" alt="" width="2172" height="724" loading="lazy"></a><nav aria-label="Enlaces del pie de página"><a href="#novedades">Novedades</a><a href="#preguntas" data-panel="preguntas">Preguntas frecuentes</a><a href="#prensa" data-panel="prensa">Prensa</a><a href="#creadores" data-panel="creadores">Creadores</a><button data-panel="creditos">Créditos</button><a class="news-admin-link" href="admin/">Administración</a></nav><p>© <span id="copyright-year">2026</span> Archilium: El Reino Sucumbido.</p></footer>
   <aside class="sound-dock" aria-label="Reproductor de ambiente musical">
     <button id="play-toggle" class="play-toggle" aria-label="Reproducir Regal Welcome" aria-pressed="false"><svg><use href="#icon-play"/></svg></button>
     <div class="track-info"><span class="track-name">Regal Welcome</span><div class="track-meta"><span id="track-state">Cargando música…</span><span id="track-time">0:00 / --:--</span></div><input id="track-progress" type="range" min="0" max="1" step="0.1" value="0" aria-label="Posición de la pista" disabled></div>
@@ -152,6 +163,10 @@
   <audio id="ambient-audio" src="assets/regal-welcome.mp3" preload="auto" playsinline loop></audio>
   <p class="sr-only" id="audio-status" aria-live="polite"></p>
 
+  <dialog id="news-dialog" aria-labelledby="news-article-title">
+    <header class="news-reader-header"><div><p class="eyebrow">Novedades de Archilium</p><h2 id="news-article-title">Noticia de Archilium</h2></div><button id="news-close" class="news-close" type="button" aria-label="Cerrar noticia" autofocus>×</button></header>
+    <div class="news-reader" id="news-reader"></div>
+  </dialog>
   <dialog id="content-dialog" aria-labelledby="dialog-title">
     <div class="dialog-topline"><a class="dialog-brand" href="#inicio" aria-label="Archilium, inicio" data-close-dialog><img src="assets/archilium-corona-dorada.png" alt="" width="2172" height="724"></a><button class="dialog-close" aria-label="Cerrar ventana"><svg><use href="#icon-close"/></svg></button></div>
     <div class="dialog-scroll"><div id="dialog-body"></div></div>
